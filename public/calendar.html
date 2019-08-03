@@ -7,26 +7,74 @@
     <link href='../fullcalendar/packages/list/main.css' rel='stylesheet' />
     <script src='../fullcalendar/packages/core/main.js'></script>
     <script src='../fullcalendar/packages/interaction/main.js'></script>
-    <script src='../fullcalendar/packages/daygrid/main.min.js'></script>
+    <script src='../fullcalendar/packages/daygrid/main.js'></script>
     <script src='../fullcalendar/packages/timegrid/main.js'></script>
     <script src='../fullcalendar/packages/list/main.js'></script>
+    <script src= "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     
     <script>        
         document.addEventListener('DOMContentLoaded', function() {
-          var calendarEl = document.getElementById('calendar');
-          var today = new Date();
-          var dd = String(today.getDate()).padStart(2, '0');
-          var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-          var yyyy = today.getFullYear();
+                var calendarEl = document.getElementById('calendar');
+                var today = new Date();
+                var dd = String(today.getDate()).padStart(2, '0');
+                var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                var yyyy = today.getFullYear();
 
-          today = yyyy + '-' + mm + '-' + dd
-          var calendar = new FullCalendar.Calendar(calendarEl, {
-            plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list'],
-            header: {
-              left: 'prev,next today addEventButton',
-              center: 'title',
-              right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+                today = yyyy + '-' + mm + '-' + dd
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                  plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list'],
+                  header: {
+                    left: 'prev,next today,addEventButton',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+                  },
+                  customButtons: {
+                    addEventButton: {
+                      text: 'add event',
+                      click: function(){
+                        openAddEvent()
+                        var eventdate = document.getElementById("edate");
+                        var eventtime = document.getElementById("etime")
+                        var eventname = document.getElementById("ename")
+                        var eventdescrip = document.getElementById("edescrip")
+                        var eventvenue = document.getElementById("evenue")
+                        var eventpriority = document.getElementById("epriority")
+
+                        /*eventDate.push(eventdate.value);
+                        eventTime.push(eventtime.value);
+                        eventName.push(eventname.value);
+                        eventDescrip.push(eventdescrip.value);
+                        eventVenue.push(eventvenue.value);*/
+                        //eventPriority.push(eventpriority.value);
+                        calendar.addEvent({
+                            date: eventdate.value,
+                            time: eventtime.value,
+                            name: eventname.value,
+                            description: eventdescrip.value,
+                            venue: eventvenue.value,
+                            // priority: eventpriority.value
+                        });
+                        for(var i = 1; i < Events.length; i++){
+                            console.log("Event " + i)
+                            console.log("Date: " + Events[i].date);
+                            console.log("Time: " + Events[i].time)
+                            console.log("Name: " + Events[i].name)
+                            console.log("Description: " + Events[i].descrip)
+                            console.log("Venue: " + Events[i].venue)
+                            console.log("Priority: " + Events[i].priority)
+                        }
+                        
+                        eventdate.value = ""
+                        eventtime.value = ""
+                        eventname.value = ""
+                        eventdescrip.value = ""
+                        eventvenue.value = ""
+                        eventpriority.value = ""
+                        generateTable()
+                      }
+                
+              }
             },
             defaultDate: today,
             navLinks: true, // can click day/week names to navigate views
@@ -34,10 +82,65 @@
             editable: true
         });
 
-    calendar.render();
-  });
-
+      calendar.render();
+    });
     </script>
+
+    <script>
+      function openAddEvent(){
+        document.getElementById("addevent").style.display = "block";
+      }
+      function closeAddEvent() {
+        document.getElementById("addevent").style.display = "none";
+      }
+      function enableAllDay() {
+        if (document.getElementById("eallday").checked) {
+          document.getElementById("eendtime").disabled = true
+          document.getElementById("estarttime").disabled = true
+        } else {
+          document.getElementById("eendtime").disabled = false
+          document.getElementById("estarttime").disabled = false
+        }          
+      }
+    </script>
+    
+    <style>
+      /* Button used to open the contact form - fixed at the bottom of the page */
+      .open-button {
+        background-color: #555;
+        color: white;
+        padding: 10px 10px;
+        border: none;
+        cursor: pointer;
+        opacity: 0.8;
+        /*position:
+        bottom: 23px;
+        right: 28px;
+        width: 280px; */
+      }
+      /* Set a style for the submit/login button */
+      .form-container .btn {
+        background-color:royalblue;
+        color: white;
+        padding: 16px 20px;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        margin-bottom:10px;
+        opacity: 0.8;
+      }
+
+      /* Add a red background color to the cancel button */
+      .form-container .cancel {
+        background-color:slategray;
+      }
+
+      /* Add some hover effects to buttons */
+      .form-container .btn:hover, .open-button:hover {
+        opacity: 1;
+      }
+
+    </style>
     <style>
 
       body {
@@ -56,9 +159,30 @@
 </head>
 <body>
     <div id='calendar'></div>
-    <div class="fc-center">
+    <!-- <div class="fc-center">
       <button type="button" class="fc-addEventButton-button fc-button fc-button-primary">add event</button>
-    </div>    
-    
+    </div>     -->
+    <div class="popup-details" id="addevent">
+      <form action="/action_page.php" class="form-container">
+     
+          Start Date<input type="date" id="estartdate"><br>
+          End Date<input type="date" id="eenddate"><br>
+          Start Time<input type="time" id="estarttime"><br>
+          End Time<input type="time" id="eendtime"><br>
+          All Day <input type="checkbox" id="eallday" onclick="enableAllDay()">
+          Name of Event<input type="text" id="ename"><br>
+          Description<input type="text" id="edescrip"><br>
+          Venue<input type="text" id="evenue"><br>
+          Priority<br>
+          <select>
+              <option value="Low" name="Epriority" id="epriority">Low </option>
+              <option value="Medium" name="Epriority" id="epriority">Medium </option>
+              <option value="High" name="Epriority" id="epriority">High </option>
+          </select>
+          <br>
+          <button type="button" class="btn" onclick="AddEvent(); closeAddEvent()">Add</button><br>
+          <button type="button" class="btn cancel" onclick="closeAddEvent()">Close</button>
+      </form>
+  </div>
 </body>
 </html>
