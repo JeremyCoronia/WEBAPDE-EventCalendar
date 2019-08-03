@@ -31,13 +31,23 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         },
         eventRender: function(info) {
-
             var tooltip = new Tooltip(info.el, {
               title: info.event.extendedProps.description,
               placement: 'top',
               trigger: 'hover',
               container: 'body'
             })
+            // var venue = new Tooltip(info.el, {
+            //     title: info.event.extendedProps.venue,
+            //     placement: 'top',
+            //     trigger: 'click',
+            //     container: 'body'
+            // })
+        },
+        eventClick: function(info) {
+            // alert(info.event.title)
+            // var eventObj = info.event
+            EditEvent(info.event)
         },
         defaultDate: today,
         navLinks: true, // can click day/week names to navigate views
@@ -48,6 +58,43 @@ document.addEventListener('DOMContentLoaded', function() {
     calendar.render();
     });
 
+function EditEvent(event) {
+    openEditEvent()
+    console.log(event)
+    var startdate = FullCalendar.formatDate(event.start, {
+        month: 'long',
+        year: 'numeric',
+        day: 'numeric',
+        timeZoneName: 'short',
+        timeZone: 'local'
+      })
+    var enddate = FullCalendar.formatDate(event.end, {
+        month: 'long',
+        year: 'numeric',
+        day: 'numeric',
+        timeZoneName: 'short',
+        timeZone: 'local'
+      })
+    console.log("startdate: " + startdate)
+    console.log("enddate: " + enddate)
+    $("#estartdate").val(startdate)
+    $("#eenddate").val(enddate)
+    $("#ename").text(event.title)
+    console.log("description: " + event.extendedProps.description)
+    $("#edescrip").text(event.extendedProps.description)
+    
+    $("#evenue").text(event.extendedProps.venue)
+    $("#eallday").prop('checked', event.allDay)
+
+    if (!event.allDay) {
+        var starttime = event.start.getHours() + ":" + event.start.getMinutes()
+        var endtime = event.end.getHours() + ":" + event.end.getMinutes()
+        $("estarttime").val(starttime)
+        $("eendtime").val(endtime)
+    }
+
+
+}
 
 function AddEvent(calendar){    
     var eventstartdate = document.getElementById("estartdate");
@@ -61,26 +108,43 @@ function AddEvent(calendar){
     var eventallday = document.getElementById("eallday")
     var eventstart
     var eventend
+    var priority
 
-    if (!eallday.checked) {
-        eventstart = eventstartdate.value + "T" + eventstarttime.value + "-00"
-        eventend = eventendtime.value + "T" + eventendtime.value + "-00"
-        console.log(eventstart)
+    // combines date and time
+    if (!eventallday.checked) {
+        eventstart = eventstartdate.value + "T" + eventstarttime.value + ":00"
+        eventend = eventenddate.value + "T" + eventendtime.value + ":00"
+        console.log(eventend)
     }
     else {
         eventstart = eventstartdate.value
         eventend = eventendtime.value
     }
     
+    // priority associate with background color
+    if (eventpriority.value == "Low") {
+        priority = "#257E4A"
+    }
+    else if (eventpriority.value == "Medium") {
+        priority = "#FFA600"
+    }
+    else if (eventpriority.value == "High"){
+        priority = "#FF3636"
+    }
+
+    // checks if there's a blank field
     var details = document.getElementsByClassName("edetails")
     var is_null = false
     for (let i=0; i<details.length; i++) {
-        if (!details[i].value) 
+        if (!details[i].value) {
             is_null = true
+            console.log(details[i])
+        }            
     }
     if (is_null)
         alert("Missing data, please try again")
     
+    // adding event
     else {
         console.log("should be adding")
         calendar.addEvent({
@@ -88,8 +152,9 @@ function AddEvent(calendar){
             end: eventend,
             title: eventname.value,
             description: eventdescrip.value,
-            venue: eventvenue.value
-            // priority: eventpriority.value
+            venue: eventvenue.value,
+            allDay: eventallday.checked,
+            backgroundColor: priority
         })  
 
     
@@ -100,7 +165,7 @@ function AddEvent(calendar){
         eventname.value = ""
         eventdescrip.value = ""
         eventvenue.value = ""
-        eventpriority.value = ""
+        eventpriority.selectedIndex = 0
         eventallday.checked = false
 
         alert("Successfully added an event!")
@@ -111,10 +176,18 @@ function AddEvent(calendar){
 
 function openAddEvent(){
     document.getElementById("addevent").style.display = "block";
+    $("#add").show()
+    $("#edit").hide()
 }
 function closeAddEvent() {
     document.getElementById("addevent").style.display = "none";
 }
+function openEditEvent() {
+    document.getElementById("addevent").style.display = "block";    
+    $("#add").hide()
+    $("#edit").show()
+}
+
 function enableAllDay() {
     if (document.getElementById("eallday").checked) {
         document.getElementById("eendtime").disabled = true

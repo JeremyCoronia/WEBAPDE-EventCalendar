@@ -22,6 +22,7 @@
     
 </head>
 <body>
+    <h3>Click event to see venue</h3>
     <div id='calendar'></div>
     <!-- <div class="fc-center">
       <button type="button" class="fc-addEventButton-button fc-button fc-button-primary">add event</button>
@@ -38,13 +39,14 @@
           Description<input type="text" class="edetails" id="edescrip"><br>
           Venue<input type="text" class="edetails" id="evenue">
           Priority
-          <select>
-              <option value="Low" name="Epriority" id="epriority">Low </option>
-              <option value="Medium" name="Epriority" id="epriority">Medium </option>
-              <option value="High" name="Epriority" id="epriority">High </option>
+          <select  id="epriority">
+              <option value="Low" name="Epriority">Low </option>
+              <option value="Medium" name="Epriority">Medium </option>
+              <option value="High" name="Epriority">High </option>
           </select>
           <br>
           <button type="button" class="btn" id="add">Add</button><br>
+          <button type="button" class="btn" id="edit">Edit</button><br>
           <button type="button" class="btn cancel" onclick="closeAddEvent()">Close</button>
           
       </form>
