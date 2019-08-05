@@ -34,18 +34,103 @@ document.addEventListener('DOMContentLoaded', function() {
               trigger: 'hover',
               container: 'body'
             })
-            // var venue = new Tooltip(info.el, {
-            //     title: info.event.extendedProps.venue,
-            //     placement: 'top',
-            //     trigger: 'click',
-            //     container: 'body'
-            // })
         },
         eventClick: function(info) {
-            // openEditEvent()            
-            // EditEvent(info.event, calendar)
             openEventDetails(info.event, calendar)
         },
+        events: [
+            {
+                title: "New Year's Day",
+                start: "2019-01-01",
+                editable: false
+            },
+            {
+                title: "Araw ng Republikang Filipino",
+                start: "2019-01-23",
+                editable: false
+            },
+            {
+                title: "Valentine's Day",
+                start: "2019-02-14",
+                editable: false
+            },
+            {
+                title: "EDSA Day",
+                start: "2019-02-25",
+                editable: false
+            },
+            {
+                title: "National Women's Day",
+                start: "2019-03-08",
+                editable: false
+            },
+            {
+                title: "Holy Week",
+                start: "2019-04-14",
+                end: "2019-04-21",
+                editable: false
+            },
+            {
+                title: "Labor's Day",
+                start: "2019-05-01",
+                editable: false
+            },
+            {
+                title: "Independence Day",
+                start: "2019-06-12",
+                editable: false
+            },
+            {
+                title: "Republic Day",
+                start: "2019-07-04",
+                editable: false
+            },
+            {
+                title: "Police Serive Anniversary",
+                start: "2019-08-08",
+                editable: false
+            },
+            {
+                title: "Philippine Medicine Day",
+                start: "2019-09-15",
+                editable: false
+            },
+            {
+                title: "United Nations Day",
+                start: "2019-10-24",
+                editable: false
+            },
+            {
+                title: "All Saints Day",
+                start: "2019-11-01",
+                editable: false
+            },
+            {
+                title: "All Souls Day",
+                start: "2019-11-02",
+                editable: false
+            },
+            {
+                title: "Bonifacio Day",
+                start: "2019-11-30",
+                editable: false
+            },
+            {
+                title: "Christmas Day",
+                start: "2019-12-25",
+                editable: false
+            },
+            {
+                title: "Rizal Day",
+                start: "2019-12-30",
+                editable: false
+            },
+            {
+                title: "New Year's Eve",
+                start: "2019-12-31",
+                editable: false
+            },
+        ],
         defaultDate: today,
         navLinks: true, // can click day/week names to navigate views
         businessHours: true, // display business hours
@@ -89,37 +174,57 @@ function openEventDetails(event, calendar) {
         timeZoneName: 'short',
         timeZone: 'local'
       })
+        
     
-    
-    $(".modal-content").append("<span class='content'>Title: "+ event.title +"</span><br>")
-    
-    if (event.allDay) {
+    if (!end){
+        $(".modal-content").append("<h3>National Holiday</h3><br>")
+        $(".modal-content").append("<span class='content'>Title: "+ event.title +"</span><br>")
         $(".modal-content").append("<span class='content'>Start: "+ getDate(start) +"</span><br>")
-        $(".modal-content").append("<span class='content'>End: "+ customed_display(getDate(end)) +"</span><br>")
-        $(".modal-content").append("<span class='content'>All day: Yes</span><br>")
     }
-    else {
+    else{
+        $(".modal-content").append("<span class='content'>Title: "+ event.title +"</span><br>")
         $(".modal-content").append("<span class='content'>Start: "+ getDate(start) +"</span><br>")
-        $(".modal-content").append("<span class='content'>End: "+ getDate(end) +"</span><br>")
-        $(".modal-content").append("<span class='content'>All day: No</span><br>")
-        $(".modal-content").append("<span class='content'>Start time: " + getTime(start) + "</span><br>")
-        $(".modal-content").append("<span class='content'>End time: " + getTime(end) + "</span><br>")
-    }
-    $(".modal-content").append("<span class='content'>Description: "+ event.extendedProps.description +"</span><br>")
-    $(".modal-content").append("<span class='content'>Venue: "+ event.extendedProps.venue +"</span><br>")
-    if (event.backgroundColor == "#257E4A") {
-        $(".modal-content").append("<span class='content'>Priority: Low </span><br>")
-    }
-    else if (event.backgroundColor == "#FFA600") {
-        $(".modal-content").append("<span class='content'>Priority: Medium </span><br>")
-    }
-    else {
-        $(".modal-content").append("<span class='content'>Priority: High </span><br>")
-    }
+        if (event.allDay) {
+            $(".modal-content").append("<span class='content'>End: "+ customed_display(getDate(end)) +"</span><br>")
+            $(".modal-content").append("<span class='content'>All day: Yes</span><br>")
+        }
+        else {
+            $(".modal-content").append("<span class='content'>End: "+ getDate(end) +"</span><br>")
+            $(".modal-content").append("<span class='content'>All day: No</span><br>")
+            $(".modal-content").append("<span class='content'>Start time: " + getTime(start) + "</span><br>")
+            $(".modal-content").append("<span class='content'>End time: " + getTime(end) + "</span><br>")
+        }
+        $(".modal-content").append("<span class='content'>Description: "+ event.extendedProps.description +"</span><br>")
+        $(".modal-content").append("<span class='content'>Venue: "+ event.extendedProps.venue +"</span><br>")
+        if (event.backgroundColor == "#257E4A") {
+            $(".modal-content").append("<span class='content'>Priority: Low </span><br>")
+        }
+        else if (event.backgroundColor == "#FFA600") {
+            $(".modal-content").append("<span class='content'>Priority: Medium </span><br>")
+        }
+        else {
+            $(".modal-content").append("<span class='content'>Priority: High </span><br>")
+        }
+        
+        $(".modal-content").append("<button type='button' class='btn' id='editevent'>Edit</button>")
+        $(".modal-content").append("<button type='button' class='btn' id='deleteevent'>Delete</button><br>")        
     
-    $(".modal-content").append("<button type='button' class='btn' id='editevent'>Edit</button>")
-    $(".modal-content").append("<button type='button' class='btn' id='deleteevent'>Delete</button><br>")
-
+        // functionality for edit button
+        $("#editevent").off("click").on("click", function(e) {
+            console.log("huy edit na please")
+            modal.style.display = "none";
+            openEditEvent()
+            EditEvent(event, calendar)
+        })
+    
+        // functionality for delete button
+        $("#deleteevent").off("click").on("click", function(e) {
+            console.log("should be removing event")
+            event.remove()
+            modal.style.display = "none";
+            alert("Deleted event successfully")
+        })
+    }
     
     window.onclick = function(e) {
         if (e.target == modal)
@@ -129,22 +234,7 @@ function openEventDetails(event, calendar) {
     span.onclick = function() {
         modal.style.display = "none";
     }
-
-    // functionality for edit button
-    $("#editevent").off("click").on("click", function(e) {
-        console.log("huy edit na please")
-        modal.style.display = "none";
-        openEditEvent()
-        EditEvent(event, calendar)
-    })
-
-    // functionality for delete button
-    $("#deleteevent").off("click").on("click", function(e) {
-        console.log("should be removing event")
-        event.remove()
-        modal.style.display = "none";
-        alert("Deleted event successfully")
-    })
+    
 }
 
 function EditEvent(event, calendar) {    
