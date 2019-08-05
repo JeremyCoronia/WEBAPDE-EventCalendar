@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     today = yyyy + '-' + mm + '-' + dd
     var calendar = new FullCalendar.Calendar(calendarEl, {
+        height: "parent",
         plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list'],
         header: {
             left: 'prev,next today,addEventButton,searchEventButton',
@@ -30,8 +31,34 @@ document.addEventListener('DOMContentLoaded', function() {
                 text: 'search',
                 click: function() {
                     openSearchEvent()
-                    $("#search").on("click", function(event){
-                        SearchEvent(event, calendar)
+                    $("#search").off("click").on("click", function (e) {
+                        e.preventDefault
+                        var key = $("#sname").val()
+                        if (!key) {
+                            alert("Enter an event title")
+                        }
+                        else {
+                            var events = calendar.getEvents()
+                            console.log(key)
+                            if (events.some(e => e.title === key)) {
+                                console.log("true")
+                                
+                                // var index = events.indexOf(key)
+                                var index = events.map(function(e) { return e.title; }).indexOf(key);
+                                console.log(events[index])
+                                var start = FullCalendar.formatDate(events[index].start, {
+                                    month: 'long',
+                                    year: 'numeric',
+                                    day: 'numeric',
+                                    timeZoneName: 'short',
+                                    timeZone: 'local'
+                                  })
+                                var date = getDate(start)
+                                calendar.gotoDate(date)
+                            }
+                            else 
+                                alert("Event not found")
+                        }
                     })
                 }
             }
@@ -522,3 +549,4 @@ function customed_display(enddate) {
 
         return enddate.slice(0, -2) + add_one
 }
+

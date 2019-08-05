@@ -56,15 +56,17 @@
             <span class="close">&times;</span>
           </div>
     </div>
+
+    <div>
+      <form action="/logout">
+          <input type="submit" value="Logout" id="logout">
+      </form>
+    </div>
+
     <div class="popup-details" id="searchevent">
       <form action="/action_page.php" class="form-container">
-        SEARCH <br>
-        Priority
-        <select  id="spriority">
-              <option value="Low" id="Low" name="Epriority">Low </option>
-              <option value="Medium" id="Medium" name="Epriority">Medium </option>
-              <option value="High" id="High" name="Epriority">High </option>
-         </select> <br>
+        Search by Event title<br>
+        <input type="text" id="sname"><br>
         <button type="button" class="btn" id="search">Search</button><br>
         <button type="button" class="btn cancel" onclick="closeSearchEvent()">Close</button>
       </form>
