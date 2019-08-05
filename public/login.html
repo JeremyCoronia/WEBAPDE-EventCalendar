@@ -37,26 +37,29 @@
             return true;
             }
                 function Register(){
-                    var un = document.getElementById("register-un")
-                    var pw = document.getElementById("register-pw")
-                    username.push(un.value)
-                    password.push(pw.value)
-                    /*Users.push({
-                        username: un.value,
-                        password: pw.value
-                    })*/
-                    alert("You created an account " + un.value + "!")
-                    console.log(username)
-                    closeRegister()
+                    
+                    if (document.getElementById("register-un").value == "" || document.getElementById("register-pw").value == ""){
+                        alert("There are missing input fields. Please fill them out first.")
+                        return false;
+                    } else {
+                        var un = document.getElementById("register-un")
+                        var pw = document.getElementById("register-pw")
+                        username.push(un.value)
+                        password.push(pw.value)
+                        /*Users.push({
+                            username: un.value,
+                            password: pw.value
+                        })*/
+                        alert("You created an account " + un.value + "!")
+                        console.log(username)
+                        closeRegister()
+                    } 
                 }
             </script>
 
     </head>
 
     <body>
-        <h1>Event Calendar</h1>
-        <h6>Enter caption here...</h6>
-        
         <div class="sidenav">
             <div class="login-main-text">
                <h2>Event Calendar<br> Login Page</h2>
@@ -83,14 +86,15 @@
 
                         <div class="popup-details" id="register">
                                 <form action="/action_page.php" class="form-container">
-                                        Username <input type="text" id="register-un" placeholder="Enter username">
-                                        <br>
-                                        Password <input type="password" id="register-pw" placeholder="Enter password">
-                                        <button type="button" class="btn" onclick="Register()">Add</button><br>
+                                        Username &nbsp;<input type="text" id="register-un" placeholder="Enter username">
+                                        <br><br>
+                                        Password &nbsp; <input type="password" id="register-pw" placeholder="Enter password">
+                                        <br><br><br>
+                                        <button type="button" class="btn" onclick="Register()">Add</button>
                                         <button type="button" class="btn cancel" onclick="closeRegister()">Close</button>
                                 </form>
                             </div>
-                            
+
                             <script>
                                     function openRegister() {
                                         event.preventDefault();
