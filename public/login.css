@@ -142,6 +142,22 @@ body {
 }
 
 .btn-black{
-    background-color: #000 !important;
-    color: #fff;
+    background-color:royalblue;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom:4px;
+    opacity: 0.8;
+}
+
+.btn-secondary{
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom:4px;
+    opacity: 0.8;
 }
