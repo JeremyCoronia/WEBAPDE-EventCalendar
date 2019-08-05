@@ -33,8 +33,10 @@ app.get("/", (req, res) => {
 })
 
 app.post("/login", urlencoder, (req, res) => {
-    // let username = req.body.loginUN
-    // let password = req.body.loginPW
+    let username = req.body.loginUN
+    let password = req.body.loginPW
+
+    
     res.sendFile(__dirname + "/public/calendar.html")
 })
 
