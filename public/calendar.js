@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var calendar = new FullCalendar.Calendar(calendarEl, {
         plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list'],
         header: {
-            left: 'prev,next today,addEventButton',
+            left: 'prev,next today,addEventButton,searchEventButton',
             center: 'title',
             right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
         },
@@ -25,6 +25,15 @@ document.addEventListener('DOMContentLoaded', function() {
                         AddEvent(calendar, true, null)
                     })
                 }   
+            },
+            searchEventButton: {
+                text: 'search',
+                click: function() {
+                    openSearchEvent()
+                    $("#search").on("click", function(event){
+                        SearchEvent(event, calendar)
+                    })
+                }
             }
         },
         eventRender: function(info) {
@@ -142,7 +151,19 @@ document.addEventListener('DOMContentLoaded', function() {
 calendar.render();
 });
 
-
+$(document).ready(function(){
+    $("#myInput").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      var events = $("#calendar").fullCalendar('clientEvents')
+      $("#myUL").empty()
+      for (let i = 0; i < events.length; i++)  {
+          $("#myUL").append("<li><a href='#'>"+events[i].title+"</a></li>")
+      }
+      $("#myList li").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
 
 function openEventDetails(event, calendar) {
     var modal = document.getElementById("myModal")
@@ -408,6 +429,13 @@ function openEditEvent() {
     $("#add").hide()
     $("#edit").show()
 }
+function openSearchEvent(){
+    document.getElementById("searchevent").style.display = "block";
+}
+function closeSearchEvent(){
+    document.getElementById("searchevent").style.display = "none";
+}
+
 
 function enableAllDay() {
     if (document.getElementById("eallday").checked) {

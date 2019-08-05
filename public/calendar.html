@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link href='/fullcalendar/packages/core/main.css' rel='stylesheet' type="text/css"/>
-    <link href='/fullcalendar/packages/daygrid/main.css' rel='stylesheet' type="text/css"/>
-    <link src='/fullcalendar/packages/timegrid/main.css' rel='stylesheet' type="text/css"/>
-    <link href='/fullcalendar/packages/list/main.css' rel='stylesheet'type="text/css" />
-    <script src='/fullcalendar/packages/core/main.js'></script>
-    <script src='/fullcalendar/packages/interaction/main.js'></script>
-    <script src='/fullcalendar/packages/daygrid/main.js'></script>
-    <script src='/fullcalendar/packages/timegrid/main.js'></script>
-    <script src='/fullcalendar/packages/list/main.js'></script>
+    <link href='../fullcalendar/packages/core/main.css' rel='stylesheet' />
+    <link href='../fullcalendar/packages/daygrid/main.css' rel='stylesheet' />
+    <link href='../fullcalendar/packages/timegrid/main.css' rel='stylesheet' />
+    <link href='../fullcalendar/packages/list/main.css' rel='stylesheet' />
+    <script src='../fullcalendar/packages/core/main.js'></script>
+    <script src='../fullcalendar/packages/interaction/main.js'></script>
+    <script src='../fullcalendar/packages/daygrid/main.js'></script>
+    <script src='../fullcalendar/packages/timegrid/main.js'></script>
+    <script src='../fullcalendar/packages/list/main.js'></script>
     <script src= "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
     <script src="https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js"></script>
@@ -17,12 +17,10 @@
     <script src='http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery.min.js'></script>
     <script src="http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery-ui.custom.min.js"></script>
     <script src='http://fullcalendar.io/js/fullcalendar-2.1.1/fullcalendar.min.js'></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     
     <script src="calendar.js"></script>
     <link rel="stylesheet" href="calendar.css">
-
+  
 </head>
 <body>
     <h3>Click event to see more details</h3>
@@ -32,6 +30,7 @@
     </div>     -->
     <div class="popup-details" id="addevent">
       <form action="/action_page.php" class="form-container">
+     
           Start Date<input type="date" class="edetails" id="estartdate"><br>
           End Date<input type="date" class="edetails" id="eenddate"><br>
           All Day <input type="checkbox" id="eallday" onclick="enableAllDay()"><br>
@@ -42,9 +41,9 @@
           Venue<input type="text" class="edetails" id="evenue">
           Priority
           <select  id="epriority">
-              <option value="Low" name="Epriority">Low </option>
-              <option value="Medium" name="Epriority">Medium </option>
-              <option value="High" name="Epriority">High </option>
+              <option value="Low" id="Low" name="Epriority">Low </option>
+              <option value="Medium" id="Medium" name="Epriority">Medium </option>
+              <option value="High" id="High" name="Epriority">High </option>
           </select>
           <br>
           <button type="button" class="btn" id="add">Add</button><br>
@@ -57,12 +56,18 @@
             <span class="close">&times;</span>
           </div>
     </div>
-
-    <div>
-      <form action="/logout">
-          <input type="submit" value="Logout" id="logout">
+    <div class="popup-details" id="searchevent">
+      <form action="/action_page.php" class="form-container">
+        SEARCH <br>
+        Priority
+        <select  id="spriority">
+              <option value="Low" id="Low" name="Epriority">Low </option>
+              <option value="Medium" id="Medium" name="Epriority">Medium </option>
+              <option value="High" id="High" name="Epriority">High </option>
+         </select> <br>
+        <button type="button" class="btn" id="search">Search</button><br>
+        <button type="button" class="btn cancel" onclick="closeSearchEvent()">Close</button>
       </form>
     </div>
-
 </body>
 </html>
