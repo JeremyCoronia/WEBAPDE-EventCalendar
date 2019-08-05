@@ -1,6 +1,4 @@
-
-
-
+var id = 0
 
 document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
@@ -22,10 +20,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 text: 'add event',
                 click: function() {                    
                     openAddEvent()
-                    $("#add").click(function (event) {
-                        console.log("clicked")
+                    $("#add").off("click").on("click", function (event) {
                         event.preventDefault()
-                        AddEvent(calendar)
+                        AddEvent(calendar, true, null)
                     })
                 }   
             }
@@ -45,58 +42,151 @@ document.addEventListener('DOMContentLoaded', function() {
             // })
         },
         eventClick: function(info) {
-            // alert(info.event.title)
-            // var eventObj = info.event
-            EditEvent(info.event)
+            // openEditEvent()            
+            // EditEvent(info.event, calendar)
+            openEventDetails(info.event, calendar)
         },
         defaultDate: today,
         navLinks: true, // can click day/week names to navigate views
         businessHours: true, // display business hours
-        editable: true
+        editable: true,
+        eventStartEditable: true,
+        eventLimit: true
     });
 
-    calendar.render();
-    });
+calendar.render();
+});
 
-function EditEvent(event) {
-    openEditEvent()
-    console.log(event)
-    var startdate = FullCalendar.formatDate(event.start, {
-        month: 'long',
-        year: 'numeric',
-        day: 'numeric',
-        timeZoneName: 'short',
-        timeZone: 'local'
-      })
-    var enddate = FullCalendar.formatDate(event.end, {
-        month: 'long',
-        year: 'numeric',
-        day: 'numeric',
-        timeZoneName: 'short',
-        timeZone: 'local'
-      })
-    console.log("startdate: " + startdate)
-    console.log("enddate: " + enddate)
-    $("#estartdate").val(startdate)
-    $("#eenddate").val(enddate)
-    $("#ename").text(event.title)
-    console.log("description: " + event.extendedProps.description)
-    $("#edescrip").text(event.extendedProps.description)
+
+
+function openEventDetails(event, calendar) {
+    var modal = document.getElementById("myModal")
     
-    $("#evenue").text(event.extendedProps.venue)
+    modal.style.display = "block";
+    
+    var child = modal.lastElementChild;  
+        while (child) { 
+            modal.removeChild(child); 
+            child = modal.lastElementChild; 
+        } 
+    
+    $("#myModal").append("<div class='modal-content'><span class='close'>&times;</span></div><br>")
+
+    console.log("should open event details")
+    var span = document.getElementsByClassName("close")[0];
+    
+    var start = FullCalendar.formatDate(event.start, {
+        month: 'long',
+        year: 'numeric',
+        day: 'numeric',
+        timeZoneName: 'short',
+        timeZone: 'local'
+      })
+    var end = FullCalendar.formatDate(event.end, {
+        month: 'long',
+        year: 'numeric',
+        day: 'numeric',
+        timeZoneName: 'short',
+        timeZone: 'local'
+      })
+    
+    
+    $(".modal-content").append("<span class='content'>Title: "+ event.title +"</span><br>")
+    
+    if (event.allDay) {
+        $(".modal-content").append("<span class='content'>Start: "+ getDate(start) +"</span><br>")
+        $(".modal-content").append("<span class='content'>End: "+ customed_display(getDate(end)) +"</span><br>")
+        $(".modal-content").append("<span class='content'>All day: Yes</span><br>")
+    }
+    else {
+        $(".modal-content").append("<span class='content'>Start: "+ getDate(start) +"</span><br>")
+        $(".modal-content").append("<span class='content'>End: "+ getDate(end) +"</span><br>")
+        $(".modal-content").append("<span class='content'>All day: No</span><br>")
+        $(".modal-content").append("<span class='content'>Start time: " + getTime(start) + "</span><br>")
+        $(".modal-content").append("<span class='content'>End time: " + getTime(end) + "</span><br>")
+    }
+    $(".modal-content").append("<span class='content'>Description: "+ event.extendedProps.description +"</span><br>")
+    $(".modal-content").append("<span class='content'>Venue: "+ event.extendedProps.venue +"</span><br>")
+    if (event.backgroundColor == "#257E4A") {
+        $(".modal-content").append("<span class='content'>Priority: Low </span><br>")
+    }
+    else if (event.backgroundColor == "#FFA600") {
+        $(".modal-content").append("<span class='content'>Priority: Medium </span><br>")
+    }
+    else {
+        $(".modal-content").append("<span class='content'>Priority: High </span><br>")
+    }
+    
+    $(".modal-content").append("<button type='button' class='btn' id='editevent'>Edit</button>")
+    $(".modal-content").append("<button type='button' class='btn' id='deleteevent'>Delete</button><br>")
+
+    
+    window.onclick = function(e) {
+        if (e.target == modal)
+            modal.style.display = "none";
+    }
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // functionality for edit button
+    $("#editevent").off("click").on("click", function(e) {
+        console.log("huy edit na please")
+        modal.style.display = "none";
+        openEditEvent()
+        EditEvent(event, calendar)
+    })
+
+    // functionality for delete button
+    $("#deleteevent").off("click").on("click", function(e) {
+        console.log("should be removing event")
+        event.remove()
+        modal.style.display = "none";
+        alert("Deleted event successfully")
+    })
+}
+
+function EditEvent(event, calendar) {    
+    console.log(event)
+    var start = FullCalendar.formatDate(event.start, {
+        month: 'long',
+        year: 'numeric',
+        day: 'numeric',
+        timeZoneName: 'short',
+        timeZone: 'local'
+      })
+    var end = FullCalendar.formatDate(event.end, {
+        month: 'long',
+        year: 'numeric',
+        day: 'numeric',
+        timeZoneName: 'short',
+        timeZone: 'local'
+      })
+      console.log("enddate in edit event: "+end)
+    $("#estartdate").val(getDate(start))
+    $("#eenddate").val(getDate(end))
+    $("#ename").val(event.title)
+    $("#edescrip").val(event.extendedProps.description)
+    
+    $("#evenue").val(event.extendedProps.venue)
     $("#eallday").prop('checked', event.allDay)
 
     if (!event.allDay) {
-        var starttime = event.start.getHours() + ":" + event.start.getMinutes()
-        var endtime = event.end.getHours() + ":" + event.end.getMinutes()
+        var starttime = getTime(start)
+        var endtime = getTime(end)
         $("estarttime").val(starttime)
         $("eendtime").val(endtime)
     }
 
-
+    $("#edit").click(function (e) {
+        e.preventDefault
+        AddEvent(calendar, false, event)
+    })
 }
 
-function AddEvent(calendar){    
+
+function AddEvent(calendar, is_adding, event) {    
     var eventstartdate = document.getElementById("estartdate");
     var eventenddate = document.getElementById("eenddate");
     var eventstarttime = document.getElementById("estarttime")
@@ -114,13 +204,18 @@ function AddEvent(calendar){
     if (!eventallday.checked) {
         eventstart = eventstartdate.value + "T" + eventstarttime.value + ":00"
         eventend = eventenddate.value + "T" + eventendtime.value + ":00"
-        console.log(eventend)
+        console.log("but why?")
+        console.log("enddateval: "+eventenddate.value)
+        console.log("endtimeval"+eventendtime.value)
+        console.log("eventend val: "+eventend)
     }
     else {
+        
         eventstart = eventstartdate.value
-        eventend = eventendtime.value
+        eventend = eventenddate.value
     }
     
+
     // priority associate with background color
     if (eventpriority.value == "Low") {
         priority = "#257E4A"
@@ -131,23 +226,26 @@ function AddEvent(calendar){
     else if (eventpriority.value == "High"){
         priority = "#FF3636"
     }
+    console.log("before check enddate: "+eventend)
+    // for fixing bug
+    eventend = check_enddate(eventend, eventallday.checked)
 
     // checks if there's a blank field
     var details = document.getElementsByClassName("edetails")
     var is_null = false
-    for (let i=0; i<details.length; i++) {
+    for (let i=0; i<details.length && !is_null; i++) {
         if (!details[i].value) {
             is_null = true
-            console.log(details[i])
         }            
     }
     if (is_null)
         alert("Missing data, please try again")
     
     // adding event
-    else {
+    else if (is_adding){
         console.log("should be adding")
         calendar.addEvent({
+            id: id,
             start: eventstart,
             end: eventend,
             title: eventname.value,
@@ -156,8 +254,39 @@ function AddEvent(calendar){
             allDay: eventallday.checked,
             backgroundColor: priority
         })  
+        console.log("end date: " + eventend)
+        
+        eventstartdate.value = ""
+        eventenddate.value = ""
+        eventstarttime.value = ""
+        eventendtime.value = ""
+        eventname.value = ""
+        eventdescrip.value = ""
+        eventvenue.value = ""
+        eventpriority.selectedIndex = 0
+        eventallday.checked = false
+        id++
 
-    
+        alert("Successfully added an event!")
+        closeAddEvent()
+    }
+
+    // editing event
+    else {        
+        console.log("before edit: "+event.title)
+        console.log("before eventname: "+eventname.value)
+        event.start = eventstart
+        event.end = eventend
+        event.title = eventname.value
+        // event.description = eventdescrip.value
+        // event.venue = eventvenue.value
+        // event.allDay = eventallday.checked
+        // event.backgroundColor = priority
+        console.log("after edit: "+event.title)
+        console.log("after eventname: "+eventname.value)
+
+        $("#calendar").fullCalendar('updateEvent', event)
+
         eventstartdate.value = ""
         eventenddate.value = ""
         eventstarttime.value = ""
@@ -168,11 +297,13 @@ function AddEvent(calendar){
         eventpriority.selectedIndex = 0
         eventallday.checked = false
 
-        alert("Successfully added an event!")
+        alert("Successfully edited an event!")
         closeAddEvent()
     }
     
 }
+
+
 
 function openAddEvent(){
     document.getElementById("addevent").style.display = "block";
@@ -196,4 +327,80 @@ function enableAllDay() {
         document.getElementById("eendtime").disabled = false
         document.getElementById("estarttime").disabled = false
     }          
+}
+
+
+function getDate(timezone) {
+    timezone = timezone + ""
+    var array = timezone.split(" ", 3)
+    // remove commas
+    // console.log(array)
+    var year, day
+    year = ''
+    day = ''
+    console.log("array: "+array)
+    console.log("array[2]: "+array[2])
+    year = array[2].substring(0, array[2].length - 1)
+    day = array[1].substring(0, array[1].length - 1)
+    var months = ['January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December']
+    var month = months.indexOf(array[0])+1 + ''
+
+    if (day.length == 1) {
+        day = '0' + day
+    }
+    if (month.length == 1) {
+        month = '0' + month
+    }
+
+    return (year + "-" + month + "-" + day)
+}
+
+function getTime(timezone) {
+    timezone = timezone + ""
+    var array = timezone.split(" ", 5)
+    var time = array[3] + " " + array[4]
+    var hours = Number(time.match(/^(\d+)/)[1]);
+    var minutes = Number(time.match(/:(\d+)/)[1]);
+    var AMPM = time.match(/\s(.*)$/)[1];
+
+    if(AMPM == "PM" && hours<12) hours = hours+12;
+    if(AMPM == "AM" && hours==12) hours = hours-12;
+
+    var sHours = hours.toString();
+    var sMinutes = minutes.toString();
+
+    if(hours<10) sHours = "0" + sHours;
+    if(minutes<10) sMinutes = "0" + sMinutes;
+    console.log(sHours + ":" + sMinutes)
+    return (sHours + ":" + sMinutes)
+}
+
+function check_enddate (enddate, checked) {
+    if (checked) {
+        console.log("di ka dapat dito")
+        var add_one = enddate.slice(-2)
+        add_one = Number(add_one)+1
+        add_one = add_one + ''
+
+        if (add_one.length == 1) {
+            add_one = '0' + add_one
+        }
+
+        return (enddate.slice(0, -2) + add_one)
+    }
+
+    return enddate
+}
+
+function customed_display(enddate) {
+    var add_one = enddate.slice(-2)
+        add_one = Number(add_one)-1
+        add_one = add_one + ''
+
+        if (add_one.length == 1) {
+            add_one = '0' + add_one
+        }
+
+        return enddate.slice(0, -2) + add_one
 }
