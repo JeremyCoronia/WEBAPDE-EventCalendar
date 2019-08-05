@@ -17,13 +17,12 @@
     <script src='http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery.min.js'></script>
     <script src="http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery-ui.custom.min.js"></script>
     <script src='http://fullcalendar.io/js/fullcalendar-2.1.1/fullcalendar.min.js'></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     
     <script src="calendar.js"></script>
-    <link rel="stylesheet" href="calendar.css">
+    <link rel="stylesheet" href="/calendar.css">
 
-    
-    
-    
 </head>
 <body>
     <h3>Click event to see more details</h3>
@@ -33,7 +32,6 @@
     </div>     -->
     <div class="popup-details" id="addevent">
       <form action="/action_page.php" class="form-container">
-     
           Start Date<input type="date" class="edetails" id="estartdate"><br>
           End Date<input type="date" class="edetails" id="eenddate"><br>
           All Day <input type="checkbox" id="eallday" onclick="enableAllDay()"><br>
@@ -59,5 +57,12 @@
             <span class="close">&times;</span>
           </div>
     </div>
+
+    <div>
+      <form action="/logout">
+          <input type="submit" value="Logout" id="logout">
+      </form>
+    </div>
+
 </body>
 </html>
