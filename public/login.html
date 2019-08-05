@@ -5,6 +5,52 @@
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <title>Event Calendar</title>
+
+        <script>
+                var username= ["admin", "admin2"]
+                var password= ["pw", "pw2"]
+                /*$(document).ready(()=>{
+                var input = document.getElementById("log-password");
+                input.addEventListener("keyup", function(event) {
+                    if (event.keyCode === 13) {
+                    event.preventDefault();
+                    document.getElementById("log-submit").click();
+                    }
+                }); 
+                console.log("Username: " + form.login-un.value)
+                })*/
+                function Login(form) { 
+                page = "calendar" + ".html";
+                none = true
+                console.log("Login")
+       
+                for(var i = 0; i <= username.length; i++){
+                    if (form.username.value == username[i] && form.password.value == password[i]){ 
+                    self.location.href = page;
+                    none = false
+                }
+                else if(i == username.length && none != false){
+                    alert("Either the username or password you entered is incorrect.\nPlease try again."); 
+                    form.username.focus();
+                }
+            }
+            return true;
+            }
+                function Register(){
+                    var un = document.getElementById("register-un")
+                    var pw = document.getElementById("register-pw")
+                    username.push(un.value)
+                    password.push(pw.value)
+                    /*Users.push({
+                        username: un.value,
+                        password: pw.value
+                    })*/
+                    alert("You created an account " + un.value + "!")
+                    console.log(username)
+                    closeRegister()
+                }
+            </script>
+
     </head>
 
     <body>
@@ -24,16 +70,36 @@
                      <div class="form-group">
                         <label>User Name</label>
                         <form method="POST" action="login">
-                            <input type="text" class="form-control" placeholder="User Name">
+                            <input type="text" class="form-control" placeholder="User Name" name="username">
                             <div class="form-group">
                                 <label>Password</label>
-                                <input type="password" class="form-control" placeholder="Password">
+                                <input type="password" class="form-control" placeholder="Password" name="password">
                              </div>
-                             <button type="submit" class="btn btn-black">Login</button>
+                             <button type="button" class="open-button btn btn-black" onclick="Login(form)">Login</button>
                         </form>
                      </div>
-                     <form method="POST" action="register">
-                        <button type="submit" class="btn btn-secondary">Register</button>
+                     <form>
+                        <button class="open-button btn btn-secondary" onclick="openRegister()">Register</button>
+
+                        <div class="popup-details" id="register">
+                                <form action="/action_page.php" class="form-container">
+                                        Username <input type="text" id="register-un" placeholder="Enter username">
+                                        <br>
+                                        Password <input type="password" id="register-pw" placeholder="Enter password">
+                                        <button type="button" class="btn" onclick="Register()">Add</button><br>
+                                        <button type="button" class="btn cancel" onclick="closeRegister()">Close</button>
+                                </form>
+                            </div>
+                            
+                            <script>
+                                    function openRegister() {
+                                        event.preventDefault();
+                                      document.getElementById("register").style.display = "block";
+                                    }
+                                    function closeRegister() {
+                                      document.getElementById("register").style.display = "none";
+                                    }
+                                </script>
                     </form>
                </div>
             </div>
