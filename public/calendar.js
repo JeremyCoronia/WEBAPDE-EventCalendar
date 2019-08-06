@@ -34,30 +34,39 @@ document.addEventListener('DOMContentLoaded', function() {
                     $("#search").off("click").on("click", function (e) {
                         e.preventDefault
                         var key = $("#sname").val()
-                        if (!key) {
-                            alert("Enter an event title")
-                        }
-                        else {
-                            var events = calendar.getEvents()
-                            console.log(key)
+                    
+                        var events = calendar.getEvents()
+                        var select = document.getElementById("searchby").value
+                        console.log(key)
+
+                        if (select == "Event Title") {
                             if (events.some(e => e.title === key)) {
                                 console.log("true")
                                 
                                 // var index = events.indexOf(key)
                                 var index = events.map(function(e) { return e.title; }).indexOf(key);
-                                console.log(events[index])
+                                alert("Event found")
                                 var start = FullCalendar.formatDate(events[index].start, {
                                     month: 'long',
                                     year: 'numeric',
                                     day: 'numeric',
                                     timeZoneName: 'short',
                                     timeZone: 'local'
-                                  })
+                                    })
                                 var date = getDate(start)
                                 calendar.gotoDate(date)
                             }
                             else 
                                 alert("Event not found")
+                        }
+                        else {
+                            var date = $("#sdate").val()
+
+                            if (date)
+                                calendar.gotoDate(date)
+                            else
+                                alert("Invalid date")
+                            
                         }
                     })
                 }
@@ -122,7 +131,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 editable: false
             },
             {
-                title: "Police Serive Anniversary",
+                title: "Police Service Anniversary",
                 start: "2019-08-08",
                 editable: false
             },
@@ -254,6 +263,22 @@ function openEventDetails(event, calendar) {
             $(".modal-content").append("<span class='content'>Priority: High </span><br>")
         }
         
+        if (event.borderColor == "#00294f") {
+            $(".modal-content").append("<span class='content'>Category: Work </span><br>")
+        }
+        else if (event.borderColor == "black") {
+            $(".modal-content").append("<span class='content'>Category: Academic </span><br>")
+        }
+        else if (event.borderColor == "#500778") {
+            $(".modal-content").append("<span class='content'>Category: Social </span><br>")
+        }
+        else if (event.borderColor == "#8C8279") {
+            $(".modal-content").append("<span class='content'>Category: Personal </span><br>")
+        }
+        else {
+            $(".modal-content").append("<span class='content'>Category: Others </span><br>")
+        }
+        
         $(".modal-content").append("<button type='button' class='btn' id='editevent'>Edit</button>")
         $(".modal-content").append("<button type='button' class='btn' id='deleteevent'>Delete</button><br>")        
     
@@ -334,10 +359,29 @@ function AddEvent(calendar, is_adding, event) {
     var eventvenue = document.getElementById("evenue")
     var eventpriority = document.getElementById("epriority")
     var eventallday = document.getElementById("eallday")
+    var ecategory = document.getElementById("ecategory")
     var eventstart
     var eventend
-    var priority
+    var priority, category
 
+    console.log(ecategory.value)
+    if (ecategory.value == "work") {
+        category = "#00294f"
+    }
+    else if (ecategory.value == "academic") {
+        category = "black"
+        console.log("pumasok here")
+    }
+    else if (ecategory.value == "social") {
+        category = "#500778"
+    }
+    else if (ecategory.value == "personal") {
+        category = "#8C8279"
+    }
+    else {
+        category = "#A4DBE8"
+    }
+    console.log("category here: "+category)
     // combines date and time
     if (!eventallday.checked) {
         eventstart = eventstartdate.value + "T" + eventstarttime.value + ":00"
@@ -390,7 +434,8 @@ function AddEvent(calendar, is_adding, event) {
             description: eventdescrip.value,
             venue: eventvenue.value,
             allDay: eventallday.checked,
-            backgroundColor: priority
+            backgroundColor: priority,
+            borderColor: category
         })  
         console.log("end date: " + eventend)
         
@@ -550,3 +595,19 @@ function customed_display(enddate) {
         return enddate.slice(0, -2) + add_one
 }
 
+// $('#searchby').change(function() {
+//     var conceptName = $('#searchby').find(":selected").text();
+//     console.log("went here")
+// });
+function change_search() {
+    var select = document.getElementById("searchby").value
+    if (select == "Event Title") {
+        $("#sname").show()
+        $("#sdate").hide()
+    }
+    else {
+        console.log("change_search select: "+ select)
+        $("#sname").hide()
+        $("#sdate").show()
+    }
+}

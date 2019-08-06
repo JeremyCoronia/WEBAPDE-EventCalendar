@@ -39,13 +39,21 @@
           Name of Event<input type="text" id="ename"><br>
           Description<input type="text" class="edetails" id="edescrip"><br>
           Venue<input type="text" class="edetails" id="evenue">
+          Category 
+          <select id="ecategory">
+            <option value="academic" id="academic">Academic</option>
+            <option value="work" id="work">Work</option>
+            <option value="social" id="social">Social</option>
+            <option value="personal" id="personal">Personal</option>
+            <option value="others" id="others">Others</option>
+          </select>
           Priority
           <select  id="epriority">
               <option value="Low" id="Low" name="Epriority">Low </option>
               <option value="Medium" id="Medium" name="Epriority">Medium </option>
               <option value="High" id="High" name="Epriority">High </option>
           </select>
-          <br><br><br>
+          <br>
           <button type="button" class="btn" id="add">Add</button><br>
           <button type="button" class="btn" id="edit">Edit</button><br>
           <button type="button" class="btn cancel" onclick="closeAddEvent()">Close</button>          
@@ -65,8 +73,13 @@
 
     <div class="popup-details" id="searchevent">
       <form action="/action_page.php" class="form-container">
-        Search by Event title<br>
+        Search by: <br>
+        <select  id="searchby" onchange="change_search()">
+          <option value="Event Title" id="Event Title" name="searchby">Event Title</option>
+          <option value="Date" id="Date" name="searchby">Date </option>
+         </select> <br>
         <input type="text" id="sname"><br>
+        <input type="date" id="sdate"><br>
         <button type="button" class="btn" id="search">Search</button><br>
         <button type="button" class="btn cancel" onclick="closeSearchEvent()">Close</button>
       </form>
