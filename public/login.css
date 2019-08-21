@@ -21,10 +21,19 @@ body {
 }
 
 h1{
-    float: left;
     font-size: 40px;
     border-bottom: 6px solid #4caf50; 
-    margin-bottom: 50px; 
+    margin-bottom: 20px; 
+}
+
+h6{
+    font-size: 20px;
+    margin: 50px;
+    margin-top: 0px;
+}
+
+#loginname{
+    float:left;
 }
 
 #webname{
@@ -32,7 +41,8 @@ h1{
     font-size: 70px;
     border-bottom: 6px solid #4caf50; 
     margin:50px;
-    margin-bottom: 100px;
+    margin-bottom: 2px;
+    /* margin-bottom: 100px; */
 }
 
 .formGroup{

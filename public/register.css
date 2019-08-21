@@ -76,6 +76,11 @@ h2{
 
 a{
     color: #82ed87;
+    transition: 0.2s;
+}
+
+a:hover{
+    color: #cdf7cf;
 }
 
 .formgroup .formInputPW::placeholder{
@@ -112,6 +117,14 @@ label{
     /* margin: 10px; */
 }
 
+.formgroup .formInputUN:hover{
+    color: #82ed87;
+}
+
+.formgroup .formInputPW:hover{
+    color: #82ed87;
+}
+
 .formBtnReg{
     width: 100%;
     background: none;
@@ -122,6 +135,7 @@ label{
     cursor: pointer;
     margin: 12px 0;
     margin-top: 25px;
+    transition: 0.2s;
 }
 
 .formBtnReg:hover{
