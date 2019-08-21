@@ -82,17 +82,11 @@ h6{
 
 .formgroup .formInputPW:focus{
     border-bottom: #4caf50 solid 5px;
+    color: #82ed87;
 }
 
 .formgroup .formInputUN:focus{
     border-bottom: #4caf50 solid 5px;
-}
-
-.formgroup .formInputUN:hover{
-    color: #82ed87;
-}
-
-.formgroup .formInputPW:hover{
     color: #82ed87;
 }
 
@@ -138,6 +132,7 @@ label{
     font-size: 20px;
     cursor: pointer;
     margin: 12px 0;
+    transition: 0.2s
 }
 
 .formBtnLogin:hover{
@@ -153,6 +148,7 @@ label{
     font-size: 20px;
     cursor: pointer;
     margin: 12px 0;
+    transition: 0.2s
 }
 
 .formBtnReg:hover{
