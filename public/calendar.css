@@ -100,7 +100,6 @@ margin: 0 auto;
 
 
   /*
-  i wish this required CSS was better documented :(
   https://github.com/FezVrasta/popper.js/issues/674
   derived from this CSS on this page: https://popper.js.org/tooltip-examples.html
   */
@@ -268,7 +267,9 @@ margin: 0 auto;
   text-decoration: none;
   cursor: pointer;
   float: right;
+  
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  margin-right: 25px;
 }
 
 #logout:hover{

@@ -4,6 +4,7 @@
         <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <link href="login.css" rel="stylesheet">
         <title>Event Calendar</title>
 
         <script>
@@ -60,58 +61,30 @@
     </head>
 
     <body>
-        <div class="sidenav">
-            <div class="login-main-text">
-               <h2>Event Calendar<br> Login Page</h2>
-               <p>Login or register from here to access.</p>
-            </div>
-         </div>
-
-         <div class="main">
-            <div class="col-md-6 col-sm-12">
-               <div class="login-form">
-                     <div class="form-group">
-                        <label>User Name</label>
-                        <form method="POST" action="login">
-                            <input type="text" class="form-control" placeholder="User Name" name="username">
-                            <div class="form-group">
-                                <label>Password</label>
-                                <input type="password" class="form-control" placeholder="Password" name="password">
-                             </div>
-                             <button type="button" class="open-button btn btn-black" onclick="Login(form)">Login</button>
-                        </form>
-                     </div>
-                     <form>
-                        <button class="open-button btn btn-secondary" onclick="openRegister()">Register</button>
-
-                        <div class="popup-details" id="register">
-                                <form action="/action_page.php" class="form-container">
-                                        <br>    
-                                        &nbsp;&nbsp;REGISTER USER
-                                        <br><br>
-                                        &nbsp;&nbsp;Username &nbsp;<input type="text" id="register-un" placeholder="Enter username">
-                                        <br><br>
-                                        &nbsp;&nbsp;Password &nbsp; <input type="password" id="register-pw" placeholder="Enter password">
-                                        <br><br>
-                                        &nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn" onclick="Register()">Add</button>
-                                        &nbsp;&nbsp;<button type="button" class="btn cancel" onclick="closeRegister()">Close</button>
-                                        <br><br>
-                                </form>
+                <h1 id="webname">My Calendar</h1>
+               <div class="loginForm">
+                    <form method="POST" action="login">
+                        <h1>Login</h1>
+                        <br><br><br><br>
+                        <div class="formGroup">
+                            <div>
+                                <label>Username</label><br>
+                                <!-- <img src="assets/user.png" class="loginIcon"> -->
+                                <input type="text" class="formInputUN" placeholder="Username" name="username">
+                                <br><br><br>
                             </div>
+                            <div>
+                                    <label>Password</label><br>
+                                    <!-- <img src="assets/lock.png" class="loginIcon"> -->
+                                    <input type="password" class="formInputPW" placeholder="Password" name="password">
+                            </div>    
+                        </div>    
+                            <button type="button" class="formBtnLogin" onclick="Login(form)">Login</button>
+                    </form>
 
-                            <script>
-                                    function openRegister() {
-                                        event.preventDefault();
-                                      document.getElementById("register").style.display = "block";
-                                    }
-                                    function closeRegister() {
-                                      document.getElementById("register").style.display = "none";
-                                    }
-                                </script>
+                    <form method="GET">
+                        <a href="register"><button type="button" class="formBtnReg" >Register</button></a>   
                     </form>
                </div>
-            </div>
-         </div>
-
     </body>
 </html>

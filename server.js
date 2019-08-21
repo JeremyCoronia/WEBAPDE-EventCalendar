@@ -39,6 +39,10 @@ app.post("/login", urlencoder, (req, res) => {
     res.sendFile(__dirname + "/public/calendar.html")
 })
 
+app.get("/register", (req, res) => {
+    res.sendFile(__dirname + "/public/register.html")
+})
+
 app.get("/logout", urlencoder, (req, res) => {
     res.sendFile(__dirname + "/public/login.html")
 })
