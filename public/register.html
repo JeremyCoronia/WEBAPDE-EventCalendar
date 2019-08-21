@@ -16,9 +16,9 @@
                 <br><br><br>
                 <div class="formGroup">
                     <label>Username</label><br>
-                    <input type="text" class="formInputUN" placeholder="Give a catchy name!" name="regUsername">
+                    <input type="text" required id="register-un" class="formInputUN" placeholder="Give a catchy name!" name="regUsername">
                     <br><br><label>Password</label>
-                    <input type="password" class="formInputPW" placeholder="What's a good password?" name="regPassword">
+                    <input type="password" required id="register-pw" class="formInputPW" placeholder="What's a good password?" name="regPassword">
                     <br><br><br><button type="button" class="formBtnReg" onclick="Register(form)">Sign Up</button>
                 </div>
             </form>
@@ -27,7 +27,24 @@
     </body>
 
     <script>
-
+        function Register(){
+                    if (document.getElementById("register-un").value == "" || document.getElementById("register-pw").value == ""){
+                        alert("There are missing input fields. Please fill them out first.")
+                        return false;
+                    } else {
+                        var un = document.getElementById("register-un")
+                        var pw = document.getElementById("register-pw")
+                        username.push(un.value)
+                        password.push(pw.value)
+                        /*Users.push({
+                            username: un.value,
+                            password: pw.value
+                        })*/
+                        alert("You created an account " + un.value + "!")
+                        console.log(username)
+                        closeRegister()
+                    } 
+                }
     </script>
 
 </html>
