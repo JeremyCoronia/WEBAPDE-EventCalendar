@@ -47,6 +47,6 @@ app.get("/logout", urlencoder, (req, res) => {
     res.sendFile(__dirname + "/public/login.html")
 })
 
-app.listen(3069, () => {
+app.listen(process.env.PORT || 3069, () => {
     console.log("live at port 3069")
 })
