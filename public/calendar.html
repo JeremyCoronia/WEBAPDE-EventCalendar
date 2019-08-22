@@ -84,12 +84,51 @@
         <select  id="searchby" onchange="change_search()">
           <option value="Event Title" id="Event Title" name="searchby">Event Title</option>
           <option value="Date" id="Date" name="searchby">Date </option>
-         </select> <br>
-        <input type="text" id="sname"><br>
+          <input type="text" id="sname"><br>
+        </select> <br>
         <input type="date" id="sdate"><br>
         <button type="button" class="btn" id="search">Search</button><br>
         <button type="button" class="btn cancel" onclick="closeSearchEvent()">Close</button>
       </form>
+    </div>
+
+    <div class="popupJ" id="addedEvent">
+        <img src="assets/reg-check.png" id="regCheck"><br>
+        <h1>You successfully added an event!</h1><br>
+        <a href="#" class="closePopup" onclick="closePopup()">Okay</a>
+    </div>
+
+    <div class="popupJ" id="editedEvent">
+        <img src="assets/reg-check.png" id="regCheck">
+        <h1>You sucessfully edited an event!</h1>
+        <a href="#" class="closePopup" onclick="closePopup()">Okay</a>
+    </div>
+
+    <div class="popupJ" id="deletedEvent">
+        <!-- check mark at the top -->
+        <img src="assets/reg-check.png" id="regCheck">
+        <h1>You sucessfully deleted an event!</h1>
+        <a href="#" class="closePopup" onclick="closePopup()">Okay</a>
+    </div>
+
+    <div class="popupJ" id="eventNotFound">
+        <img src="assets/reg-wrong.png" id="regWrong">
+        <h1>I'm sorry. We weren't able to find the event.</h1>
+        <a href="#" class="closePopup regBtnWrong" onclick="closePopup()">Close</a>
+    </div>
+
+    <div class="popupJ" id="missData">
+        <img src="assets/reg-wrong.png" id="regWrong">
+        <br>
+        <h1>There are missing input fields. Please try again.</h1>
+        <br><br><br><br><br><br>
+        <a href="#" class="closePopup regBtnWrong" onclick="closePopup()">Close</a>
+    </div>
+
+    <div class="popupJ" id="invalidDate">
+        <img src="assets/reg-wrong.png" id="regWrong">
+        <h1>The date you put is invalid. Please try again.</h1>
+        <a href="#" class="closePopup regBtnWrong" onclick="closePopup()">Close</a>
     </div>
 </body>
 </html>

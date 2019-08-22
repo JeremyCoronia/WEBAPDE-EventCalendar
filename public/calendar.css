@@ -1,3 +1,7 @@
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity:1 ;}
+}
 
 html, body {font-family: Arial, Helvetica, sans-serif; overflow: hidden;}
 * {box-sizing: border-box;}
@@ -244,7 +248,7 @@ body {
 
 /* Modal Content */
 .modal-content {
-  background-color: #fefefe;
+  background-color: #f1f1f1;
   margin: auto;
   padding: 20px;
   border: 1px solid #888;
@@ -266,13 +270,46 @@ body {
   cursor: pointer;
 }
 
+span{
+  font-size: 20px;
+}
+
+.content{
+  font-size: 20px;
+}
+
+.fc-time{
+  font-size: 15px;
+}
+
+.fc-title{
+  font-size: 15px;
+  word-wrap: break-word;
+}
+
+.fc-day-number{
+  font-size: 15px;
+}
+
+h3{
+  margin-bottom: 10px;
+}
+
+
+
+span.close:hover{
+  color: #E04F5F;
+}
+
 #logout{
   background-color: rgba(0, 25, 51, 1);
   border: none;
   color: white;
-  padding: 16px 32px;
+  padding: 15px;
+  padding-left: 20px;
+  padding-right: 20px;
   text-align: center;
-  font-size: 16px;
+  font-size: 18px;
   margin: 4px 2px;
   margin-top: 10px;
   margin-right: 15px;
@@ -345,4 +382,118 @@ h1{
   top: 100px;
   width: 100%;
   margin: auto;
+}
+
+.popupJ{
+  width: 500px;
+    overflow: hidden;
+    background: #f1f1f1;
+    box-shadow: 0 0 20px black;
+    border-radius: 8px;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    padding: 20px;
+    text-align: center;
+    display: none;
+    animation: fadeIn 0.1s;
+}
+
+#regCheck{
+  width: 40px;
+  height: 40px;
+  text-align: center;
+}
+
+#regWrong{
+  width: 40px;
+  height: 40px;
+  text-align: center;
+}
+
+.popupJ h1{
+  color: #333;
+  font-size: 25px;
+  border-bottom: 0;
+  text-justify: distribute;
+  /* margin: 20px; */
+  margin: 0px;
+  position: absolute;
+  text-align: center;
+}
+
+.closePopup{
+  text-decoration: none;
+  font-size: 20px;
+  color: #000;
+  padding: 10px;
+  padding: 10px 30px;
+  cursor: pointer;
+  background: none;
+  border: 2px solid #4caf50;
+  display: inline-block;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.closePopup:hover{
+  text-decoration: none;
+  color: #F0FFF0;
+  background-color: #4caf50;
+}
+
+.regBtnWrong{
+  border: #E04F5F 2px solid;
+  background: none;
+  color: black;
+}
+
+.regBtnWrong:hover{
+  color: #F0FFF0;
+  background: #E04F5F;
+}
+
+span.content{
+  padding: 10px;
+  margin: 15px;
+  font-size: 15px;
+}
+
+#editevent{
+  width: 100px;
+  background: none;
+  border: 2px solid #123e6b;
+  color: black;
+  padding: 5px;
+  font-size: 20px;
+  cursor: pointer;
+  margin: 12px 0;
+  margin-top: 25px;
+  transition: 0.2s;
+  margin-right: 10px;
+}
+
+#editevent:hover{
+  background-color: #416387;
+  color: white;
+}
+
+#deleteevent{
+  width: 100px;
+  background: none;
+  border: 2px solid #E04F5F;
+  color: black;
+  padding: 5px;
+  font-size: 20px;
+  cursor: pointer;
+  margin: 12px 0;
+  margin-top: 25px;
+  transition: 0.2s;
+}
+
+#deleteevent:hover{
+  background-color: #E04F5F;
+  color: white;
 }
