@@ -10,11 +10,17 @@ document.addEventListener('DOMContentLoaded', function() {
     today = yyyy + '-' + mm + '-' + dd
     var calendar = new FullCalendar.Calendar(calendarEl, {
         height: "parent",
+        contentHeight: 500,
         plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list'],
         header: {
             left: 'prev,next today,addEventButton,searchEventButton',
             center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+            right: 'dayGridMonth,timeGridWeek,timeGridDay,listYear'
+        },
+        views: {
+            listYear: {
+                buttonText: 'all events'
+            }
         },
         customButtons: {
             addEventButton: {
@@ -37,15 +43,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     
                         var events = calendar.getEvents()
                         var select = document.getElementById("searchby").value
-                        console.log(key)
 
                         if (select == "Event Title") {
                             if (events.some(e => e.title === key)) {
-                                console.log("true")
                                 
                                 // var index = events.indexOf(key)
                                 var index = events.map(function(e) { return e.title; }).indexOf(key);
-                                alert("Event found")
+                                // alert("Event found")
                                 var start = FullCalendar.formatDate(events[index].start, {
                                     month: 'long',
                                     year: 'numeric',
@@ -200,6 +204,8 @@ $(document).ready(function(){
       });
     });
   });
+// calendar.option('aspectRatio', 2)
+
 
 function openEventDetails(event, calendar) {
     var modal = document.getElementById("myModal")
@@ -214,7 +220,6 @@ function openEventDetails(event, calendar) {
     
     $("#myModal").append("<div class='modal-content'><span class='close'>&times;</span></div><br>")
 
-    console.log("should open event details")
     var span = document.getElementsByClassName("close")[0];
     
     var start = FullCalendar.formatDate(event.start, {
@@ -284,7 +289,6 @@ function openEventDetails(event, calendar) {
     
         // functionality for edit button
         $("#editevent").off("click").on("click", function(e) {
-            console.log("huy edit na please")
             modal.style.display = "none";
             openEditEvent()
             EditEvent(event, calendar)
@@ -292,7 +296,6 @@ function openEventDetails(event, calendar) {
     
         // functionality for delete button
         $("#deleteevent").off("click").on("click", function(e) {
-            console.log("should be removing event")
             event.remove()
             modal.style.display = "none";
             alert("Deleted event successfully")
@@ -311,7 +314,6 @@ function openEventDetails(event, calendar) {
 }
 
 function EditEvent(event, calendar) {    
-    console.log(event)
     var start = FullCalendar.formatDate(event.start, {
         month: 'long',
         year: 'numeric',
@@ -326,15 +328,16 @@ function EditEvent(event, calendar) {
         timeZoneName: 'short',
         timeZone: 'local'
       })
-      console.log("enddate in edit event: "+end)
     $("#estartdate").val(getDate(start))
-    $("#eenddate").val(getDate(end))
+    $("#eenddate").val(customed_display(getDate(end)))
     $("#ename").val(event.title)
     $("#edescrip").val(event.extendedProps.description)
     
     $("#evenue").val(event.extendedProps.venue)
     $("#eallday").prop('checked', event.allDay)
 
+    enableAllDay()
+    
     if (!event.allDay) {
         var starttime = getTime(start)
         var endtime = getTime(end)
@@ -342,7 +345,7 @@ function EditEvent(event, calendar) {
         $("eendtime").val(endtime)
     }
 
-    $("#edit").click(function (e) {
+    $("#edit").off("click").on("click", function (e) {
         e.preventDefault
         AddEvent(calendar, false, event)
     })
@@ -364,7 +367,6 @@ function AddEvent(calendar, is_adding, event) {
     var eventend
     var priority, category
 
-    console.log(ecategory.value)
     if (ecategory.value == "work") {
         category = "#00294f"
     }
@@ -381,15 +383,10 @@ function AddEvent(calendar, is_adding, event) {
     else {
         category = "#A4DBE8"
     }
-    console.log("category here: "+category)
     // combines date and time
     if (!eventallday.checked) {
         eventstart = eventstartdate.value + "T" + eventstarttime.value + ":00"
         eventend = eventenddate.value + "T" + eventendtime.value + ":00"
-        console.log("but why?")
-        console.log("enddateval: "+eventenddate.value)
-        console.log("endtimeval"+eventendtime.value)
-        console.log("eventend val: "+eventend)
     }
     else {
         
@@ -408,7 +405,6 @@ function AddEvent(calendar, is_adding, event) {
     else if (eventpriority.value == "High"){
         priority = "#FF3636"
     }
-    console.log("before check enddate: "+eventend)
     // for fixing bug
     eventend = check_enddate(eventend, eventallday.checked)
 
@@ -425,7 +421,6 @@ function AddEvent(calendar, is_adding, event) {
     
     // adding event
     else if (is_adding){
-        console.log("should be adding")
         calendar.addEvent({
             id: id,
             start: eventstart,
@@ -436,9 +431,13 @@ function AddEvent(calendar, is_adding, event) {
             allDay: eventallday.checked,
             backgroundColor: priority,
             borderColor: category
-        })  
-        console.log("end date: " + eventend)
+        })                  
+
+        alert("Successfully added an event!")
+        closeAddEvent()
         
+        calendar.gotoDate(eventstartdate.value)
+
         eventstartdate.value = ""
         eventenddate.value = ""
         eventstarttime.value = ""
@@ -449,24 +448,18 @@ function AddEvent(calendar, is_adding, event) {
         eventpriority.selectedIndex = 0
         eventallday.checked = false
         id++
-
-        alert("Successfully added an event!")
-        closeAddEvent()
     }
 
     // editing event
     else {        
-        console.log("before edit: "+event.title)
-        console.log("before eventname: "+eventname.value)
-        event.start = eventstart
-        event.end = eventend
-        event.title = eventname.value
-        // event.description = eventdescrip.value
-        // event.venue = eventvenue.value
-        // event.allDay = eventallday.checked
-        // event.backgroundColor = priority
-        console.log("after edit: "+event.title)
-        console.log("after eventname: "+eventname.value)
+        event.setDates(eventstart, eventend, {
+            allDay: eventallday.checked
+        })
+        event.setProp("title", eventname.value)
+        event.setExtendedProp("description", eventdescrip.value)
+        event.setExtendedProp("venue", eventvenue.value)
+        event.setProp("backgroundColor", priority)
+        event.setProp("borderColor", category)
 
         $("#calendar").fullCalendar('updateEvent', event)
 
@@ -482,30 +475,50 @@ function AddEvent(calendar, is_adding, event) {
 
         alert("Successfully edited an event!")
         closeAddEvent()
+        
     }
     
 }
 
 
+var new_width
 
 function openAddEvent(){
     document.getElementById("addevent").style.display = "block";
     $("#add").show()
     $("#edit").hide()
+    $("#searchevent").hide()
+    new_width = $(window).width() - $("#addevent").width()
+    // $("#calendar").css("maxWidth", new_width + "px" )
+    $('#calendar').width(new_width + "px")
+    $('#calendar-container').width(new_width + "px")
+    
 }
 function closeAddEvent() {
     document.getElementById("addevent").style.display = "none";
+    $("#calendar").width("90%")
+    $("#calendar-container").width("90%")
+    
 }
 function openEditEvent() {
     document.getElementById("addevent").style.display = "block";    
     $("#add").hide()
     $("#edit").show()
+    new_width = $(window).width() - $("#addevent").width()
+    $('#calendar').width(new_width + "px");
+    $('#calendar-container').width(new_width + "px");
 }
 function openSearchEvent(){
     document.getElementById("searchevent").style.display = "block";
+    $("#addevent").hide()
+    new_width = $(window).width() - $("#searchevent").width()    
+    $('#calendar').width(new_width + "px");
+    $('#calendar-container').width(new_width + "px");
 }
 function closeSearchEvent(){
     document.getElementById("searchevent").style.display = "none";
+    $('#calendar').width("90%");
+    $("#calendar-container").width("90%")
 }
 
 
@@ -524,12 +537,10 @@ function getDate(timezone) {
     timezone = timezone + ""
     var array = timezone.split(" ", 3)
     // remove commas
-    // console.log(array)
+
     var year, day
     year = ''
     day = ''
-    console.log("array: "+array)
-    console.log("array[2]: "+array[2])
     year = array[2].substring(0, array[2].length - 1)
     day = array[1].substring(0, array[1].length - 1)
     var months = ['January', 'February', 'March', 'April', 'May', 'June',
@@ -562,13 +573,13 @@ function getTime(timezone) {
 
     if(hours<10) sHours = "0" + sHours;
     if(minutes<10) sMinutes = "0" + sMinutes;
-    console.log(sHours + ":" + sMinutes)
+
     return (sHours + ":" + sMinutes)
 }
 
+// fixing fullcalendar bug, plus 1 day to the end date if event is all day
 function check_enddate (enddate, checked) {
     if (checked) {
-        console.log("di ka dapat dito")
         var add_one = enddate.slice(-2)
         add_one = Number(add_one)+1
         add_one = add_one + ''
@@ -583,6 +594,7 @@ function check_enddate (enddate, checked) {
     return enddate
 }
 
+// fixing fullcalendar bug, displays plus 1 day to the end date if event is all day
 function customed_display(enddate) {
     var add_one = enddate.slice(-2)
         add_one = Number(add_one)-1
@@ -595,10 +607,7 @@ function customed_display(enddate) {
         return enddate.slice(0, -2) + add_one
 }
 
-// $('#searchby').change(function() {
-//     var conceptName = $('#searchby').find(":selected").text();
-//     console.log("went here")
-// });
+// changes search by event title or by date
 function change_search() {
     var select = document.getElementById("searchby").value
     if (select == "Event Title") {
@@ -606,7 +615,6 @@ function change_search() {
         $("#sdate").hide()
     }
     else {
-        console.log("change_search select: "+ select)
         $("#sname").hide()
         $("#sdate").show()
     }

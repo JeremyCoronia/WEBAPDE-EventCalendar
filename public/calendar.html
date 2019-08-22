@@ -22,23 +22,32 @@
     <link rel="stylesheet" href="calendar.css">
   
 </head>
+<title>My Calendar</title>
 <body>
-    <h3>Click event to see more details</h3>
-    <div id='calendar'></div>
+    <!-- <h3>Click event to see more details</h3> -->
+    
+    <div>
+      <form action="/logout">
+          <input type="submit" value="Logout" id="logout">
+      </form>
+    </div>
+
+    <div id="calendar-container">
+      <div id='calendar'></div>  
+    </div>
+    
     <!-- <div class="fc-center">
       <button type="button" class="fc-addEventButton-button fc-button fc-button-primary">add event</button>
     </div>     -->
     <div class="popup-details" id="addevent">
       <form action="/action_page.php" class="form-container">
-     
-          Start Date<input type="date" class="edetails" id="estartdate"><br>
-          End Date<input type="date" class="edetails" id="eenddate"><br>
-          All Day <input type="checkbox" id="eallday" onclick="enableAllDay()"><br>
-          Start Time<input type="time" id="estarttime"><br>
-          End Time<input type="time" id="eendtime">          
+
           Name of Event<input type="text" id="ename"><br>
           Description<input type="text" class="edetails" id="edescrip"><br>
           Venue<input type="text" class="edetails" id="evenue">
+          Start Date: <input type="date" class="edetails" id="estartdate"> Start Time: <input type="time" id="estarttime"><br>
+          End Date: &nbsp<input type="date" class="edetails" id="eenddate"> End Time: &nbsp<input type="time" id="eendtime"><br>
+          All Day <input type="checkbox" id="eallday" onclick="enableAllDay()"><br><br>
           Category 
           <select id="ecategory">
             <option value="academic" id="academic">Academic</option>
@@ -53,7 +62,7 @@
               <option value="Medium" id="Medium" name="Epriority">Medium </option>
               <option value="High" id="High" name="Epriority">High </option>
           </select>
-          <br>
+          <br><br><br><br>
           <button type="button" class="btn" id="add">Add</button><br>
           <button type="button" class="btn" id="edit">Edit</button><br>
           <button type="button" class="btn cancel" onclick="closeAddEvent()">Close</button>          
@@ -63,12 +72,6 @@
         <div class="modal-content">
             <span class="close">&times;</span>
           </div>
-    </div>
-
-    <div>
-      <form action="/logout">
-          <input type="submit" value="Logout" id="logout">
-      </form>
     </div>
 
     <div class="popup-details" id="searchevent">
