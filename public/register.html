@@ -1,0 +1,81 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="/register.css" type="text/css">
+        <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <link href="register.css" rel="stylesheet">
+        <title>Register Page</title>
+    </head>
+
+    <body>
+        <div class="header"><h1>Join My Calendars now!</h1></div>
+        <div class="regForm">
+            <form method="POST" action="signup">
+                <h2>Register</h2>
+                <br><br><br>
+                <div class="formGroup">
+                    <label>Username</label><br>
+                    <input type="text" id="register-un" class="formInputUN" placeholder="Give a catchy name!" name="regUsername">
+                    <br><br><label>Password</label>
+                    <input type="password" id="register-pw" class="formInputPW" placeholder="What's a good password?" name="regPassword">
+                    <br><br><br><button type="button" class="formBtnReg" onclick="Register(form)">Sign Up</button>
+                </div>
+            </form>
+            Already have an account? <a href="/">Login to your account.</a>
+        </div>
+
+        <div id="regPopup">
+            <!-- check mark at the top -->
+            <img src="assets/reg-check.png" id="regCheck">
+            <h1>You sucessfully created an account!</h1>
+            <a href="/" class="closePopup">Go back to Login</a>
+        </div>
+
+        <div id="regPopupWrong">
+            <img src="assets/reg-wrong.png" id="regWrong">
+            <h1>There are missing input fields. Please try again.</h1>
+            <a class="closePopup regBtnWrong" onclick="closeWPopup()">Close</a>
+        </div>
+
+    </body>
+
+    <script>
+        var c = 0
+        var username= ["admin", "admin2"]
+        var password= ["pw", "pw2"]
+
+        function closeWPopup(){
+            $("#regPopupWrong").hide()
+        }
+
+        function openWPopup(){
+            $("#regPopupWrong").show()
+        }
+
+        function openCPopup(){
+            $("#regPopup").show()
+        }
+
+        function closeCPopup(){
+            $("#regPopup").hide()
+        }
+
+        function Register(){
+            if (document.getElementById("register-un").value == "" || document.getElementById("register-pw").value == ""){
+                openWPopup()
+            } else {
+                var un = document.getElementById("register-un")
+                var pw = document.getElementById("register-pw")
+                username.push(un.value)
+                password.push(pw.value)
+                        /*Users.push({
+                            username: un.value,
+                            password: pw.value
+                        })*/
+                        // closeRegister()
+                openCPopup();
+            } 
+        }
+    </script>
+</html>
