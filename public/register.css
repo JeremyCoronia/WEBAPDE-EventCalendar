@@ -139,3 +139,87 @@ label{
 input{
     color: white;
 }
+
+#regPopup{
+    width: 500px;
+    overflow: hidden;
+    background: #f1f1f1;
+    box-shadow: 0 0 20px black;
+    border-radius: 8px;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    padding: 20px;
+    text-align: center;
+    display: none;
+}
+
+#regPopupWrong{
+    width: 500px;
+    overflow: hidden;
+    background: #f1f1f1;
+    box-shadow: 0 0 20px black;
+    border-radius: 8px;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    padding: 20px;
+    text-align: center;
+    display:none;
+}
+
+#regCheck{
+    width: 40px;
+    height: 40px;
+    text-align: center;
+}
+
+#regWrong{
+    width: 40px;
+    height: 40px;
+    text-align: center;
+}
+
+#regPopupWrong h1{
+    color: #333;
+    font-size: 25px;
+    border-bottom: 0;
+    text-justify: distribute;
+    margin: 20px;
+}
+
+#regPopup h1{
+    color: #333;
+    font-size: 25px;
+    border-bottom: 0;
+    text-justify: distribute;
+    margin: 20px;
+}
+
+.closePopup{
+    font-size: 20px;
+    color: #ffffff;
+    padding: 10px;
+    padding: 10px 30px;
+    cursor: pointer;
+    background: #4caf50;
+    display: inline-block;
+    border-radius: 4px;
+}
+
+.regBtnWrong{
+    background: #E04F5F;
+}
+
+.regBtnWrong:hover{
+    color: white;
+}
+
+.closePopup:hover{
+    text-decoration: none;
+    COLOR: white;
+}
