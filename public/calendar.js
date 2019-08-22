@@ -489,7 +489,7 @@ function openAddEvent(){
     $("#edit").hide()
     $("#searchevent").hide()
     new_width = $(window).width() - $("#addevent").width()
-    // $("#calendar").css("maxWidth", new_width + "px" )
+
     $('#calendar').width(new_width + "px")
     $('#calendar-container').width(new_width + "px")
     
@@ -497,7 +497,7 @@ function openAddEvent(){
 function closeAddEvent() {
     document.getElementById("addevent").style.display = "none";
     $("#calendar").width("90%")
-    $("#calendar-container").width("90%")
+    $("#calendar-container").width("100%")
     
 }
 function openEditEvent() {
@@ -518,7 +518,7 @@ function openSearchEvent(){
 function closeSearchEvent(){
     document.getElementById("searchevent").style.display = "none";
     $('#calendar').width("90%");
-    $("#calendar-container").width("90%")
+    $("#calendar-container").width("100%")
 }
 
 
