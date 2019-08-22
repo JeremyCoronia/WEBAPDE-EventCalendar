@@ -420,7 +420,7 @@ h1{
   text-justify: distribute;
   /* margin: 20px; */
   margin: 0px;
-  position: absolute;
+  position: fixed;
   text-align: center;
 }
 
