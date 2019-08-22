@@ -19,7 +19,7 @@
                     <input type="text" id="register-un" class="formInputUN" placeholder="Give a catchy name!" name="regUsername">
                     <br><br><label>Password</label>
                     <input type="password" id="register-pw" class="formInputPW" placeholder="What's a good password?" name="regPassword">
-                    <br><br><br><button type="button" class="formBtnReg" onclick="Register(form)">Sign Up</button>
+                    <br><br><br><button type="button" class="formBtnReg" id="register-btn" onclick="Register(form)">Sign Up</button>
                 </div>
             </form>
             Already have an account? <a href="/">Login to your account.</a>
@@ -35,7 +35,7 @@
         <div id="regPopupWrong">
             <img src="assets/reg-wrong.png" id="regWrong">
             <h1>There are missing input fields. Please try again.</h1>
-            <a class="closePopup regBtnWrong" onclick="closeWPopup()">Close</a>
+            <a href="#" class="closePopup regBtnWrong" onclick="closeWPopup()">Close</a>
         </div>
 
     </body>
@@ -61,7 +61,32 @@
             $("#regPopup").hide()
         }
 
+        // register-un register-pw
+        $("#register-pw").keypress(function(event){
+                if (event.keyCode == 13){
+                    $("#register-btn").click()
+                }
+        })
+
+        $("#register-un").keypress(function(event){
+                if (event.keyCode == 13){
+                    $("#register-btn").click()
+                }
+        })
+
+        // $("#regPopupWrong").keypress(()=>{
+        //     if (event.keyCode == 13) {
+        //         document.getElementsByClassName("closePopup").click()
+        //         // $(".closePopup").click()
+        //     }
+        // })
+
+        $("#register-btn").click(() => {
+            Register()
+        })
+
         function Register(){
+
             if (document.getElementById("register-un").value == "" || document.getElementById("register-pw").value == ""){
                 openWPopup()
             } else {

@@ -20,40 +20,25 @@
                 }); 
                 console.log("Username: " + form.login-un.value)
                 })*/
-                function Login(form) { 
+                function Login() { 
                 page = "calendar" + ".html";
                 none = true
        
                 for(var i = 0; i <= username.length; i++){
-                    if (form.username.value == username[i] && form.password.value == password[i]){ 
+                    if (document.getElementById("register-un").value == username[i] && document.getElementById("register-pw").value == password[i]){ 
                     self.location.href = page;
                     none = false
                 }
                 else if(i == username.length && none != false){
+                   openWPopup()
+                   document.getElementById("register-un").value =""
+                   document.getElementById("register-pw").value =""
                     // alert("Either the username or password you entered is incorrect.\nPlease try again."); 
                 }
             }
             return true;
             }
-                function Register(){
-                    
-                    if (document.getElementById("register-un").value == "" || document.getElementById("register-pw").value == ""){
-                        alert("There are missing input fields. Please fill them out first.")
-                        return false;
-                    } else {
-                        var un = document.getElementById("register-un")
-                        var pw = document.getElementById("register-pw")
-                        username.push(un.value)
-                        password.push(pw.value)
-                        /*Users.push({
-                            username: un.value,
-                            password: pw.value
-                        })*/
-                        alert("You created an account " + un.value + "!")
-                        console.log(username)
-                        closeRegister()
-                    } 
-                }
+            
             </script>
 
     </head>
@@ -68,22 +53,61 @@
                             <div>
                                 <label>Username</label><br>
                                 <!-- <img src="assets/user.png" class="loginIcon"> -->
-                                <input type="text"  autocomplete="off" class="formInputUN" placeholder="Username" name="username">
+                                <input type="text"  autocomplete="off" id="register-un" class="formInputUN" placeholder="Username" name="username">
                                 <br><br><br>
                             </div>
                             <div>
                                     <label>Password</label><br>
                                     <!-- <img src="assets/lock.png" class="loginIcon"> -->
-                                    <input type="password" class="formInputPW" placeholder="Password" name="password">
+                                    <input type="password" id="register-pw" class="formInputPW" placeholder="Password" name="password">
                                     <br><br>
                             </div>    
                         </div>    
-                            <button type="button" class="formBtnLogin" onclick="Login(form)">Login</button>
+                            <button type="button" id="login-btn" class="formBtnLogin" onclick="Login()">Login</button>
                     </form>
 
                     <form method="GET">
                         <a href="register"><button type="button" class="formBtnReg" >Register</button></a>   
                     </form>
                </div>
+
+               <!-- <div id="regPopup">
+                    <img src="assets/reg-check.png" id="regCheck">
+                    <h1>You sucessfully created an account!</h1>
+                    <a href="/" class="closePopup">Go back to Login</a>
+                </div> -->
+        
+                <div id="regPopupWrong">
+                    <img src="assets/reg-wrong.png" id="regWrong">
+                    <h1>Wrong login credentials. Please try again. </h1>
+                    <a href="#" class="closePopup regBtnWrong" onclick="closeWPopup()">Close</a>
+                </div>
     </body>
+
+    <script>
+        function closeWPopup(){
+            $("#regPopupWrong").hide()
+        }
+
+        function openWPopup(){
+            $("#regPopupWrong").show()
+        }
+        
+        // register-un register-pw
+        $("#register-pw").keypress(function(event){
+                if (event.keyCode == 13){
+                    $("#login-btn").click()
+                }
+        })
+
+        $("#register-un").keypress(function(event){
+                if (event.keyCode == 13){
+                    $("#login-btn").click()
+                }
+        })
+
+        $("#login-btn").click(() => {
+            Login()
+        })
+    </script>
 </html>
