@@ -43,7 +43,7 @@
       <button type="button" class="fc-addEventButton-button fc-button fc-button-primary">add event</button>
     </div>     -->
     <div class="popup-details" id="addevent">
-      <form action="/addEvent" method="POST" class="form-container">
+      <form class="form-container">
           Name of Event<input type="text" id="aname" name="title"><br>
           Description<input type="text" class="adetails" id="adescrip" name="description"><br>
           Venue<input type="text" class="adetails" id="avenue" name="venue">
@@ -66,11 +66,12 @@
           </select>
           <br><br><br><br>
           <button type="submit" class="btn" id="add">Add</button><br>
+          <button type="submit" class="btn" id="edit">Edit</button><br>
           <button type="button" class="btn cancel" onclick="closeAddEvent()">Close</button>          
       </form>
     </div>
 
-    <div class="popup-details" id="editevent">
+    <!-- <div class="popup-details" id="editevent">
       <form action="editEvent" method="POST" class="form-container">
           Name of Event<input type="text" id="ename" name="title"><br>
           Description<input type="text" class="edetails" id="edescrip" name="description"><br>
@@ -96,7 +97,7 @@
           <button type="submit" class="btn" id="edit">Edit</button><br>
           <button type="button" class="btn cancel" onclick="closeEditEvent()">Close</button>          
       </form>
-    </div>
+    </div> -->
 
     <div class="modal" id="myModal">
         <div class="modal-content">

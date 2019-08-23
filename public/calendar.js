@@ -331,21 +331,21 @@ function editEventDetails(event, calendar) {
         timeZoneName: 'short',
         timeZone: 'local'
       })
-    $("#estartdate").val(getDate(start))
-    $("#eenddate").val(customed_display(getDate(end)))
-    $("#ename").val(event.title)
-    $("#edescrip").val(event.extendedProps.description)
+    $("#astartdate").val(getDate(start))
+    $("#aenddate").val(customed_display(getDate(end)))
+    $("#aname").val(event.title)
+    $("#adescrip").val(event.extendedProps.description)
     
-    $("#evenue").val(event.extendedProps.venue)
-    $("#eallday").prop('checked', event.allDay)
+    $("#avenue").val(event.extendedProps.venue)
+    $("#aallday").prop('checked', event.allDay)
 
     enableAllDay()
     
     if (!event.allDay) {
         var starttime = getTime(start)
         var endtime = getTime(end)
-        $("estarttime").val(starttime)
-        $("eendtime").val(endtime)
+        $("astarttime").val(starttime)
+        $("aendtime").val(endtime)
     }
 
     $("#edit").off("click").on("click", function (e) {
@@ -457,6 +457,7 @@ function AddEvent(calendar, event, is_adding) {
         id++
     }
 
+    // editing event
     else {
         event.setDates(eventstart, eventend, {
             allDay: eventallday.checked
@@ -469,6 +470,11 @@ function AddEvent(calendar, event, is_adding) {
 
         $("#calendar").fullCalendar('updateEvent', event)
 
+        calendar.gotoDate(eventstartdate.value)
+        $("#editedEvent").show()
+        // alert("Successfully edited an event!")
+        closeAddEvent()
+
         eventstartdate.value = ""
         eventenddate.value = ""
         eventstarttime.value = ""
@@ -478,33 +484,31 @@ function AddEvent(calendar, event, is_adding) {
         eventvenue.value = ""
         eventpriority.selectedIndex = 0
         eventallday.checked = false
-
-        $("#editedEvent").show()
-        alert("Successfully edited an event!")
-        closeEditEvent()
+        
     }
 }
 
-function EditEvent(calendar, event){
+// function EditEvent(calendar, event){
 
-    // kulang pa from add event
+//     // kulang pa from add event
 
-    if (is_null)
-        alert("Missing data, please try again")
+//     if (is_null)
+//         alert("Missing data, please try again")
     
-    // editing event
-    else {        
+//     // editing event
+//     else {        
         
         
-    }    
-}
+//     }    
+// }
 
 
 var new_width
 
 function openAddEvent(){
     $("#addevent").show()
-    $("#editevent").hide()
+    $("#add").show()
+    $("#edit").hide()
     $("#searchevent").hide()
     new_width = $(window).width() - $("#addevent").width()
 
@@ -518,9 +522,10 @@ function closeAddEvent() {
     $("#calendar-container").width("100%")    
 }
 function openEditEvent() {
-    $("#editevent").show()
+    $("#addevent").show()
     $("#searchevent").hide()
-    $("#addevent").hide()
+    $("#add").hide()
+    $("#edit").show()
     new_width = $(window).width() - $("#addevent").width()
     $('#calendar').width(new_width + "px");
     $('#calendar-container').width(new_width + "px");
@@ -553,13 +558,13 @@ function enableAllDay() {
         document.getElementById("aendtime").disabled = false
         document.getElementById("astarttime").disabled = false
     }
-    if (document.getElementById("eallday").checked) {
-        document.getElementById("eendtime").disabled = true
-        document.getElementById("estarttime").disabled = true
-    } else {
-        document.getElementById("eendtime").disabled = false
-        document.getElementById("estarttime").disabled = false
-    }
+    // if (document.getElementById("eallday").checked) {
+    //     document.getElementById("eendtime").disabled = true
+    //     document.getElementById("estarttime").disabled = true
+    // } else {
+    //     document.getElementById("eendtime").disabled = false
+    //     document.getElementById("estarttime").disabled = false
+    // }
 }
 
 
