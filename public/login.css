@@ -43,6 +43,7 @@ h6{
 }
 
 #webname{
+    font-family: sans-serif;
     display: inline-block;   
     font-size: 55px;
     border-bottom: 6px solid #123e6b; 

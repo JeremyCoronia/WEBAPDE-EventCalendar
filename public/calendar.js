@@ -61,7 +61,8 @@ document.addEventListener('DOMContentLoaded', function() {
                                 calendar.gotoDate(date)
                             }
                             else 
-                                alert("Event not found")
+                                $("#eventNotFound").show()
+                                // alert("Event not found")
                         }
                         else {
                             var date = $("#sdate").val()
@@ -69,7 +70,8 @@ document.addEventListener('DOMContentLoaded', function() {
                             if (date)
                                 calendar.gotoDate(date)
                             else
-                                alert("Invalid date")
+                                $("#invalidData").show()
+                                // alert("Invalid date")
                             
                         }
                     })
@@ -298,7 +300,8 @@ function openEventDetails(event, calendar) {
         $("#deleteevent").off("click").on("click", function(e) {
             event.remove()
             modal.style.display = "none";
-            alert("Deleted event successfully")
+            // alert("Deleted event successfully")
+            $("#deletedEvent").show()
         })
     }
     
@@ -418,7 +421,9 @@ function AddEvent(calendar) {
         }            
     }
     if (is_null)
-        alert("Missing data, please try again")
+        $("#missData").show()
+        // alert("Missing data, please try again")
+
     
     // adding event
     else{
@@ -434,7 +439,8 @@ function AddEvent(calendar) {
             borderColor: category
         })                  
 
-        alert("Successfully added an event!")
+        $("#addedEvent").show()
+        // alert("Successfully added an event!")
         closeAddEvent()
         
         calendar.gotoDate(eventstartdate.value)
@@ -484,6 +490,7 @@ function EditEvent(calendar, event){
         eventpriority.selectedIndex = 0
         eventallday.checked = false
 
+        $("#editedEvent").show()
         alert("Successfully edited an event!")
         closeEditEvent()
         
@@ -626,6 +633,15 @@ function customed_display(enddate) {
         }
 
         return enddate.slice(0, -2) + add_one
+}
+
+function closePopup(){
+    $("#addedEvent").hide()
+    $("#editedEvent").hide()
+    $("#deletedEvent").hide()
+    $("#eventNotFound").hide()
+    $("#missData").hide()
+    $("#invalidDate").hide()
 }
 
 // changes search by event title or by date
