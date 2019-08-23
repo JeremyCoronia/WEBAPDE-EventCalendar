@@ -7,7 +7,17 @@ var User = mongoose.model("user", {
     validated: {
         type: Boolean,
         default: true
-    }
+    },
+    events: [{
+        title: String,
+        description: String,
+        venue: String,
+        start: String,
+        end: String,
+        allDay: Boolean,
+        backgroundColor: String,
+        borderColor: String
+    }]
 })
 
 module.exports = {

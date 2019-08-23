@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     openAddEvent()
                     $("#add").off("click").on("click", function (event) {
                         event.preventDefault()
-                        AddEvent(calendar, true, null)
+                        AddEvent(calendar, null)
                     })
                 }   
             },
@@ -291,7 +291,7 @@ function openEventDetails(event, calendar) {
         $("#editevent").off("click").on("click", function(e) {
             modal.style.display = "none";
             openEditEvent()
-            EditEvent(event, calendar)
+            editEventDetails(event, calendar)
         })
     
         // functionality for delete button
@@ -313,7 +313,7 @@ function openEventDetails(event, calendar) {
     
 }
 
-function EditEvent(event, calendar) {    
+function editEventDetails(event, calendar) {    
     var start = FullCalendar.formatDate(event.start, {
         month: 'long',
         year: 'numeric',
@@ -347,22 +347,22 @@ function EditEvent(event, calendar) {
 
     $("#edit").off("click").on("click", function (e) {
         e.preventDefault
-        AddEvent(calendar, false, event)
+        EditEvent(calendar, event)
     })
 }
 
 
-function AddEvent(calendar, is_adding, event) {    
-    var eventstartdate = document.getElementById("estartdate");
-    var eventenddate = document.getElementById("eenddate");
-    var eventstarttime = document.getElementById("estarttime")
-    var eventendtime = document.getElementById("eendtime")
-    var eventname = document.getElementById("ename")
-    var eventdescrip = document.getElementById("edescrip")
-    var eventvenue = document.getElementById("evenue")
-    var eventpriority = document.getElementById("epriority")
-    var eventallday = document.getElementById("eallday")
-    var ecategory = document.getElementById("ecategory")
+function AddEvent(calendar) {    
+    var eventstartdate = document.getElementById("astartdate");
+    var eventenddate = document.getElementById("aenddate");
+    var eventstarttime = document.getElementById("astarttime")
+    var eventendtime = document.getElementById("aendtime")
+    var eventname = document.getElementById("aname")
+    var eventdescrip = document.getElementById("adescrip")
+    var eventvenue = document.getElementById("avenue")
+    var eventpriority = document.getElementById("apriority")
+    var eventallday = document.getElementById("aallday")
+    var ecategory = document.getElementById("acategory")
     var eventstart
     var eventend
     var priority, category
@@ -394,6 +394,7 @@ function AddEvent(calendar, is_adding, event) {
         eventend = eventenddate.value
     }
     
+    enableAllDay()
 
     // priority associate with background color
     if (eventpriority.value == "Low") {
@@ -409,7 +410,7 @@ function AddEvent(calendar, is_adding, event) {
     eventend = check_enddate(eventend, eventallday.checked)
 
     // checks if there's a blank field
-    var details = document.getElementsByClassName("edetails")
+    var details = document.getElementsByClassName("adetails")
     var is_null = false
     for (let i=0; i<details.length && !is_null; i++) {
         if (!details[i].value) {
@@ -420,7 +421,7 @@ function AddEvent(calendar, is_adding, event) {
         alert("Missing data, please try again")
     
     // adding event
-    else if (is_adding){
+    else{
         calendar.addEvent({
             id: id,
             start: eventstart,
@@ -450,6 +451,16 @@ function AddEvent(calendar, is_adding, event) {
         id++
     }
 
+    
+}
+
+function EditEvent(calendar, event){
+
+    // kulang pa from add event
+
+    if (is_null)
+        alert("Missing data, please try again")
+    
     // editing event
     else {        
         event.setDates(eventstart, eventend, {
@@ -474,19 +485,17 @@ function AddEvent(calendar, is_adding, event) {
         eventallday.checked = false
 
         alert("Successfully edited an event!")
-        closeAddEvent()
+        closeEditEvent()
         
-    }
-    
+    }    
 }
 
 
 var new_width
 
 function openAddEvent(){
-    document.getElementById("addevent").style.display = "block";
-    $("#add").show()
-    $("#edit").hide()
+    $("#addevent").show()
+    $("#editevent").hide()
     $("#searchevent").hide()
     new_width = $(window).width() - $("#addevent").width()
 
@@ -497,20 +506,25 @@ function openAddEvent(){
 function closeAddEvent() {
     document.getElementById("addevent").style.display = "none";
     $("#calendar").width("90%")
-    $("#calendar-container").width("100%")
-    
+    $("#calendar-container").width("100%")    
 }
 function openEditEvent() {
-    document.getElementById("addevent").style.display = "block";    
-    $("#add").hide()
-    $("#edit").show()
+    $("#editevent").show()
+    $("#searchevent").hide()
+    $("#addevent").hide()
     new_width = $(window).width() - $("#addevent").width()
     $('#calendar').width(new_width + "px");
     $('#calendar-container').width(new_width + "px");
 }
+function closeEditEvent() {
+    $("#editevent").hide()
+    $("#calendar").width("90%")
+    $("#calendar-container").width("100%")
+}
 function openSearchEvent(){
     document.getElementById("searchevent").style.display = "block";
     $("#addevent").hide()
+    $("#editevent").hide()
     new_width = $(window).width() - $("#searchevent").width()    
     $('#calendar').width(new_width + "px");
     $('#calendar-container').width(new_width + "px");
@@ -523,13 +537,20 @@ function closeSearchEvent(){
 
 
 function enableAllDay() {
+    if (document.getElementById("aallday").checked) {
+        document.getElementById("aendtime").disabled = true
+        document.getElementById("astarttime").disabled = true
+    } else {
+        document.getElementById("aendtime").disabled = false
+        document.getElementById("astarttime").disabled = false
+    }
     if (document.getElementById("eallday").checked) {
         document.getElementById("eendtime").disabled = true
         document.getElementById("estarttime").disabled = true
     } else {
         document.getElementById("eendtime").disabled = false
         document.getElementById("estarttime").disabled = false
-    }          
+    }
 }
 
 

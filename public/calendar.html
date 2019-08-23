@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <link href='../fullcalendar/packages/core/main.css' rel='stylesheet' />
@@ -26,6 +25,10 @@
 <body>
     <!-- <h3>Click event to see more details</h3> -->
     
+    <div id="myHeader">
+      <h1>My Calendar</h1>
+    </div>
+    
     <div id="wrapper">
       <form action="/logout">
           <input type="submit" value="Logout" id="logout">
@@ -40,16 +43,43 @@
       <button type="button" class="fc-addEventButton-button fc-button fc-button-primary">add event</button>
     </div>     -->
     <div class="popup-details" id="addevent">
-      <form action="/action_page.php" class="form-container">
-
-          Name of Event<input type="text" id="ename"><br>
-          Description<input type="text" class="edetails" id="edescrip"><br>
-          Venue<input type="text" class="edetails" id="evenue">
-          Start Date: <input type="date" class="edetails" id="estartdate"> Start Time: <input type="time" id="estarttime"><br>
-          End Date: &nbsp<input type="date" class="edetails" id="eenddate"> End Time: &nbsp<input type="time" id="eendtime"><br>
-          All Day <input type="checkbox" id="eallday" onclick="enableAllDay()"><br><br>
+      <form action="/addEvent" method="POST" class="form-container">
+          Name of Event<input type="text" id="aname" name="title"><br>
+          Description<input type="text" class="adetails" id="adescrip" name="description"><br>
+          Venue<input type="text" class="adetails" id="avenue" name="venue">
+          Start Date: <input type="date" class="adetails" id="astartdate" name="start_date"> Start Time: <input type="time" id="astarttime" name="start_time"><br>
+          End Date: &nbsp<input type="date" class="adetails" id="aenddate" name="end_date"> End Time: &nbsp<input type="time" id="aendtime" name="end_time"><br>
+          All Day <input type="checkbox" id="aallday" onclick="enableAllDay()" name="allDay"><br><br>
           Category 
-          <select id="ecategory">
+          <select id="acategory" name="category">
+            <option value="academic" id="aacademic">Academic</option>
+            <option value="work" id="awork">Work</option>
+            <option value="social" id="asocial">Social</option>
+            <option value="personal" id="apersonal">Personal</option>
+            <option value="others" id="aothers">Others</option>
+          </select>
+          Priority
+          <select  id="apriority" name="priority">
+              <option value="Low" id="aLow" name="apriority">Low </option>
+              <option value="Medium" id="aMedium" name="apriority">Medium </option>
+              <option value="High" id="aHigh" name="apriority">High </option>
+          </select>
+          <br><br><br><br>
+          <button type="submit" class="btn" id="add">Add</button><br>
+          <button type="button" class="btn cancel" onclick="closeAddEvent()">Close</button>          
+      </form>
+    </div>
+
+    <div class="popup-details" id="editevent">
+      <form action="editEvent" method="POST" class="form-container">
+          Name of Event<input type="text" id="ename" name="title"><br>
+          Description<input type="text" class="edetails" id="edescrip" name="description"><br>
+          Venue<input type="text" class="edetails" id="evenue" name="venue">
+          Start Date: <input type="date" class="edetails" id="estartdate" name="start_date"> Start Time: <input type="time" id="estarttime" name="start_time"><br>
+          End Date: &nbsp<input type="date" class="edetails" id="eenddate" name="end_date"> End Time: &nbsp<input type="time" id="eendtime" name="end_time"><br>
+          All Day <input type="checkbox" id="eallday" onclick="enableAllDay()" name="allDay"><br><br>
+          Category 
+          <select id="ecategory" name="category">
             <option value="academic" id="academic">Academic</option>
             <option value="work" id="work">Work</option>
             <option value="social" id="social">Social</option>
@@ -57,17 +87,17 @@
             <option value="others" id="others">Others</option>
           </select>
           Priority
-          <select  id="epriority">
+          <select  id="epriority" name="priority">
               <option value="Low" id="Low" name="Epriority">Low </option>
               <option value="Medium" id="Medium" name="Epriority">Medium </option>
               <option value="High" id="High" name="Epriority">High </option>
           </select>
           <br><br><br><br>
-          <button type="button" class="btn" id="add">Add</button><br>
-          <button type="button" class="btn" id="edit">Edit</button><br>
-          <button type="button" class="btn cancel" onclick="closeAddEvent()">Close</button>          
+          <button type="submit" class="btn" id="edit">Edit</button><br>
+          <button type="button" class="btn cancel" onclick="closeEditEvent()">Close</button>          
       </form>
     </div>
+
     <div class="modal" id="myModal">
         <div class="modal-content">
             <span class="close">&times;</span>
