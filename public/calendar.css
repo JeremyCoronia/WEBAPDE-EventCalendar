@@ -123,39 +123,40 @@ body {
 
   .popper,
   .tooltip {
-    position: absolute;
-    z-index: 9999;
-    background: #FFC107;
-    color: black;
-    width: 150px;
-    border-radius: 3px;
-    box-shadow: 0 0 2px rgba(0,0,0,0.5);
-    padding: 10px;
-    text-align: center;
+      position: absolute;
+      z-index: 9999;
+      background: #FFC107;
+      color: black;
+      width: 150px;
+      border-radius: 3px;
+      box-shadow: 0 0 2px rgba(0,0,0,0.5);
+      padding: 10px;
+      text-align: center;
   }
   .style5 .tooltip {
-    background: #1E252B;
-    color: #FFFFFF;
-    max-width: 200px;
-    width: auto;
-    font-size: .8rem;
-    padding: .5em 1em;
+      background: #1E252B;
+      color: #FFFFFF;
+      max-width: 200px;
+      width: auto;
+      font-size: .8rem;
+      padding: .5em 1em;
   }
+
   .popper .popper__arrow,
   .tooltip .tooltip-arrow {
-    width: 0;
-    height: 0;
-    border-style: solid;
-    position: absolute;
-    margin: 5px;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      position: absolute;
+      margin: 5px;
   }
 
   .tooltip .tooltip-arrow,
   .popper .popper__arrow {
-    border-color: #FFC107;
+      border-color: #FFC107;
   }
   .style5 .tooltip .tooltip-arrow {
-    border-color: #1E252B;
+      border-color: #1E252B;
   }
   .popper[x-placement^="top"],
   .tooltip[x-placement^="top"] {
@@ -323,53 +324,53 @@ span.close:hover{
 }
 
 h1{
-  font-family: serif;
-  position: fixed;
-  display: inline-block;   
-  font-size: 45px;
-  border-bottom: 6px solid #123e6b; 
-  margin-top: 10px;
-  margin-left: 20px;
+    font-family: serif;
+    position: fixed;
+    display: inline-block;   
+    font-size: 45px;
+    border-bottom: 6px solid #123e6b; 
+    margin-top: 10px;
+    margin-left: 20px;
 }
 
 #logout:hover{
-  opacity: 1;
+    opacity: 1;
 }
 
 #myInput {
-  /* background-image: url('/css/searchicon.png'); */
-  background-position: 10px 12px;
-  background-repeat: no-repeat;
-  width: 100%;
-  font-size: 16px;
-  padding: 12px 20px 12px 40px;
-  border: 1px solid #ddd;
-  margin-bottom: 12px;
+    /* background-image: url('/css/searchicon.png'); */
+    background-position: 10px 12px;
+    background-repeat: no-repeat;
+    width: 100%;
+    font-size: 16px;
+    padding: 12px 20px 12px 40px;
+    border: 1px solid #ddd;
+    margin-bottom: 12px;
 }
 
 #myUL {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
 }
 
 #myUL li a {
-  border: 1px solid #ddd;
-  margin-top: -1px; /* Prevent double borders */
-  background-color: #f6f6f6;
-  padding: 12px;
-  text-decoration: none;
-  font-size: 18px;
-  color: black;
-  display: block
+    border: 1px solid #ddd;
+    margin-top: -1px; /* Prevent double borders */
+    background-color: #f6f6f6;
+    padding: 12px;
+    text-decoration: none;
+    font-size: 18px;
+    color: black;
+    display: block
 }
 
 #myUL li a:hover:not(.header) {
-  background-color: #eee;
+    background-color: #eee;
 }
 
 #sdate{
-  display: none;
+    display: none;
 }
 
 
@@ -498,3 +499,20 @@ span.content{
   background-color: #E04F5F;
   color: white;
 }
+
+/* #eventNotFound{
+  width: 400px;
+    overflow: hidden;
+    background: #f1f1f1;
+    box-shadow: 0 0 20px black;
+    border-radius: 8px;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    padding: 20px;
+    text-align: center;
+    display: none;
+    animation: fadeIn 0.1s;  
+} */
