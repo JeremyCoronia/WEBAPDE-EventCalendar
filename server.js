@@ -12,7 +12,7 @@ var Username
 // const Event = require("./event.js").Event
 
 mongoose.Promise = global.Promise
-mongoose.connect("mongodb://localhost:27017/myCalendar", {
+mongoose.connect("mongodb://localhost:27017/sample_Db", {
     useNewUrlParser:true,
     useFindAndModify: false
 }) 
@@ -24,7 +24,7 @@ const urlencoder = bodyparser.urlencoded({
 })
 
 app.use(cookieparser())
-app.use(express.static(__dirname+"/public"))
+app.use(express.static(__dirname+"/views"))
 
 app.use(session({
     resave: true,
@@ -52,7 +52,7 @@ app.get("/", (req, res)=>{
         })        
     }else{
         console.log("Di Match")
-        res.sendFile(__dirname + "/public/login.html")
+        res.sendFile(__dirname + "/views/login.html")
     }
 
 }) 
@@ -69,7 +69,7 @@ app.post("/login", urlencoder,(req,res)=>{
         console.log(doc)
         
         req.session.un = username
-        res.sendFile(__dirname + "/public/calendar.html")
+        res.sendFile(__dirname + "/views/calendar.html")
         // res.render("calendar.hbs", {
         //     username
         // })
@@ -78,7 +78,7 @@ app.post("/login", urlencoder,(req,res)=>{
     }, (err)=>{
         alert("Not Valid!")
         console.log("Di match in /login")
-        res.sendFile(__dirname + "/public/login.html")
+        res.sendFile(__dirname + "/views/login.html")
         res.send(err)
 
     })
@@ -102,9 +102,7 @@ app.post("/signup", urlencoder,(req,res)=>{
     user.save().then((doc)=>{
         console.log(doc)
         req.session.username = doc.username
-        res.render("home.hbs", {
-            username : doc.username
-        })
+        res.redirect("/")
     }, (err)=>{
         res.send(err)
     })
@@ -132,7 +130,7 @@ app.get("/register", (req,res)=>{
             //     err ,
             //     msg 
             // })
-            res.sendFile(__dirname + "/public/register.html")
+            res.sendFile(__dirname + "/views/register.html")
         }
     })
 })

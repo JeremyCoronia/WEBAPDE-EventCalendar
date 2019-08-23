@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     openAddEvent()
                     $("#add").off("click").on("click", function (event) {
                         event.preventDefault()
-                        AddEvent(calendar, null)
+                        AddEvent(calendar, null, true)
                     })
                 }   
             },
@@ -350,12 +350,12 @@ function editEventDetails(event, calendar) {
 
     $("#edit").off("click").on("click", function (e) {
         e.preventDefault
-        EditEvent(calendar, event)
+        AddEvent(calendar, event, false)
     })
 }
 
 
-function AddEvent(calendar) {    
+function AddEvent(calendar, event, is_adding) {    
     var eventstartdate = document.getElementById("astartdate");
     var eventenddate = document.getElementById("aenddate");
     var eventstarttime = document.getElementById("astarttime")
@@ -426,7 +426,7 @@ function AddEvent(calendar) {
 
     
     // adding event
-    else{
+    else if (is_adding){
         calendar.addEvent({
             id: id,
             start: eventstart,
@@ -457,18 +457,7 @@ function AddEvent(calendar) {
         id++
     }
 
-    
-}
-
-function EditEvent(calendar, event){
-
-    // kulang pa from add event
-
-    if (is_null)
-        alert("Missing data, please try again")
-    
-    // editing event
-    else {        
+    else {
         event.setDates(eventstart, eventend, {
             allDay: eventallday.checked
         })
@@ -493,6 +482,19 @@ function EditEvent(calendar, event){
         $("#editedEvent").show()
         alert("Successfully edited an event!")
         closeEditEvent()
+    }
+}
+
+function EditEvent(calendar, event){
+
+    // kulang pa from add event
+
+    if (is_null)
+        alert("Missing data, please try again")
+    
+    // editing event
+    else {        
+        
         
     }    
 }
